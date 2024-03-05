@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 const crypto = require("node:crypto");
 
-data = [{ name: crypto.randomUUID() }];
+data = [{ id: crypto.randomUUID(), name: "default", price: (Math.random() * 100).toFixed(2) }];
 
 for (let i = 0; i < 10; i++) {
-  data.push({ name: crypto.randomUUID() });
+  data.push({ id: crypto.randomUUID(), name: "default", price: (Math.random() * 100).toFixed(2) });
 }
 
 /* GET home page. */

@@ -3,7 +3,21 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  //- pre #{data[0].name}
-  ul 
+  ol 
     each val in data
-      li= val.name
+      li #[strong ID:] #{val.id} #[strong NAME:] #{val.name} #[strong PRICE:] £#{val.price}
+    strong test
+
+
+  table
+    thead 
+      tr 
+        th ID
+        th Name 
+        th Price
+    tbody 
+      each row in data
+        tr
+          td #{row.id }
+          td #{row.name}
+          td #{row.price}
