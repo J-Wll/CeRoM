@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  //- pre #{data[0].name}
+  ul 
+    each val in data
+      li= val.name
