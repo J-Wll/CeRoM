@@ -1,20 +1,15 @@
 extends tableLayout
 
-//- TODO: Convert this to a dynamic table that takes the headers+content from params
-
 block content
+    script(src="js/tableSort.js")
     table
         thead 
             tr 
-                th 
-                    button ID
-                th 
-                    button Name 
-                th 
-                    button Price
+                each column in Object.keys(data[0])
+                    th 
+                        button(onclick=`tableSort('${column}')`) #{column}
         tbody 
             each row in data
                 tr
-                    td #{row.id }
-                    td #{row.name}
-                    td #{row.price}
+                    each column in row
+                        td #{column}

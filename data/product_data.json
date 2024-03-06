@@ -1,57 +1,57 @@
 [
     {
-        "id": "028ea616-041b-4364-8eb4-83932160e0d",
-        "name": "default",
-        "price": "12.92"
+        "ID": "028ea616-041b-4364-8eb4-83932160e0d",
+        "Name": "default",
+        "Price": "12.92"
     },
     {
-        "id": "a8b8b6ce-48ba-46f2-921b-e57504c8fd8f",
-        "name": "default",
-        "price": "28.46"
+        "ID": "a8b8b6ce-48ba-46f2-921b-e57504c8fd8f",
+        "Name": "default",
+        "Price": "28.46"
     },
     {
-        "id": "a7fa97a5-6e0f-404b-9b7f-46acb579fed8",
-        "name": "default",
-        "price": "39.01"
+        "ID": "a7fa97a5-6e0f-404b-9b7f-46acb579fed8",
+        "Name": "default",
+        "Price": "39.01"
     },
     {
-        "id": "0fbbc128-691a-4bb8-ba04-e9c88305b096",
-        "name": "default",
-        "price": "68.00"
+        "ID": "0fbbc128-691a-4bb8-ba04-e9c88305b096",
+        "Name": "default",
+        "Price": "68.00"
     },
     {
-        "id": "d0b07ae0-b941-4625-8288-8b2049a5d6fa",
-        "name": "default",
-        "price": "14.56"
+        "ID": "d0b07ae0-b941-4625-8288-8b2049a5d6fa",
+        "Name": "default",
+        "Price": "14.56"
     },
     {
-        "id": "bfb5193b-b955-441f-95c6-3429aafc3767",
-        "name": "default",
-        "price": "55.10"
+        "ID": "bfb5193b-b955-441f-95c6-3429aafc3767",
+        "Name": "default",
+        "Price": "55.10"
     },
     {
-        "id": "cebb70c7-16be-4afb-ad8a-f0048fc383e0",
-        "name": "default",
-        "price": "60.31"
+        "ID": "cebb70c7-16be-4afb-ad8a-f0048fc383e0",
+        "Name": "default",
+        "Price": "60.31"
     },
     {
-        "id": "55ea662d-c5c2-49c8-967e-f22726a1f007",
-        "name": "default",
-        "price": "67.47"
+        "ID": "55ea662d-c5c2-49c8-967e-f22726a1f007",
+        "Name": "default",
+        "Price": "67.47"
     },
     {
-        "id": "e485f6d0-a0fe-4d4a-9dd7-710d0528c964",
-        "name": "default",
-        "price": "16.67"
+        "ID": "e485f6d0-a0fe-4d4a-9dd7-710d0528c964",
+        "Name": "default",
+        "Price": "16.67"
     },
     {
-        "id": "041cb661-74d2-411d-8dc3-5659629f3ffb",
-        "name": "default",
-        "price": "88.06"
+        "ID": "041cb661-74d2-411d-8dc3-5659629f3ffb",
+        "Name": "default",
+        "Price": "88.06"
     },
     {
-        "id": "c6e98438-a752-40cd-b2d7-13c2df313d80",
-        "name": "default",
-        "price": "20.07"
+        "ID": "c6e98438-a752-40cd-b2d7-13c2df313d80",
+        "Name": "default",
+        "Price": "20.07"
     }
 ]
