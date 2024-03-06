@@ -1,12 +1,17 @@
 extends tableLayout
 
+//- TODO: Convert this to a dynamic table that takes the headers+content from params
+
 block content
     table
         thead 
             tr 
-                th ID
-                th Name 
-                th Price
+                th 
+                    button ID
+                th 
+                    button Name 
+                th 
+                    button Price
         tbody 
             each row in data
                 tr
