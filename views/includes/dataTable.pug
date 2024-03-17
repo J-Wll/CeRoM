@@ -1,13 +1,24 @@
 extends tableLayout
 
 block content
-    script(src="js/tableSort.js")
+    script.
+        function addQuery(headerName){
+            const searchParams = new URLSearchParams(window.location.search);
+            let sortBy = "asc"
+            if(searchParams.has("sortDir")){
+                //- if it is currently ascending and it is the same header, then set to des
+                if(searchParams.get("sortDir") === "asc" & searchParams.get("sortBy") === headerName){
+                    sortBy = "des"
+                }
+            }
+            window.location.search = `?sortBy=${headerName}&sortDir=${sortBy}`
+        }
     table
         thead 
             tr 
                 each column in Object.keys(data[0])
                     th 
-                        button(onclick=`tableSort('${column}')`) #{column}
+                        button(onclick=`addQuery('${column}')`) #{column}
         tbody 
             each row in data
                 tr
