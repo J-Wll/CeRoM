@@ -1,57 +1,72 @@
 [
     {
         "ID": "028ea616-041b-4364-8eb4-83932160e0d",
-        "Name": "default",
-        "Price": "12.92"
+        "name": "Socks",
+        "price": 12.99
     },
     {
         "ID": "a8b8b6ce-48ba-46f2-921b-e57504c8fd8f",
-        "Name": "default",
-        "Price": "28.46"
+        "name": "Wallet",
+        "price": 28.50
     },
     {
         "ID": "a7fa97a5-6e0f-404b-9b7f-46acb579fed8",
-        "Name": "default",
-        "Price": "39.01"
+        "name": "Scarf",
+        "price": 39.00
     },
     {
         "ID": "0fbbc128-691a-4bb8-ba04-e9c88305b096",
-        "Name": "default",
-        "Price": "68.00"
+        "name": "Belt",
+        "price": 38.00
     },
     {
         "ID": "d0b07ae0-b941-4625-8288-8b2049a5d6fa",
-        "Name": "default",
-        "Price": "14.56"
+        "name": "Mug",
+        "price": 14.50
     },
     {
         "ID": "bfb5193b-b955-441f-95c6-3429aafc3767",
-        "Name": "default",
-        "Price": "55.10"
+        "name": "Sunglasses",
+        "price": 35.00
     },
     {
         "ID": "cebb70c7-16be-4afb-ad8a-f0048fc383e0",
-        "Name": "default",
-        "Price": "60.31"
+        "name": "Keychain",
+        "price": 10.00
     },
     {
         "ID": "55ea662d-c5c2-49c8-967e-f22726a1f007",
-        "Name": "default",
-        "Price": "67.47"
+        "name": "Watch",
+        "price": 67.00
     },
     {
         "ID": "e485f6d0-a0fe-4d4a-9dd7-710d0528c964",
-        "Name": "default",
-        "Price": "16.67"
+        "name": "Blanket",
+        "price": 16.99
     },
     {
         "ID": "041cb661-74d2-411d-8dc3-5659629f3ffb",
-        "Name": "default",
-        "Price": "88.06"
+        "name": "Gloves",
+        "price": 18.00
     },
     {
         "ID": "c6e98438-a752-40cd-b2d7-13c2df313d80",
-        "Name": "default",
-        "Price": "20.07"
+        "name": "Tote Bag",
+        "price": 20.00
+    },
+    {
+        "ID": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+        "name": "Hat",
+        "price": 25.00
+    },
+    {
+        "ID": "d7e8f9a0-b1c2-d3e4-f5a6-7b8c9d0e1f2a",
+        "name": "Earrings",
+        "price": 32.50
+    },
+    {
+        "ID": "n0t1b2c3-d4e5f6a7-b8c9d0e1-f2a3b4c5d6",
+        "name": "Notebook",
+        "price": 8.99
     }
 ]
