@@ -4,14 +4,14 @@ block content
     script.
         function addQuery(headerName){
             const searchParams = new URLSearchParams(window.location.search);
-            let sortBy = "asc"
+            let sortDir = "asc"
             if(searchParams.has("sortDir")){
                 //- if it is currently ascending and it is the same header, then set to des
                 if(searchParams.get("sortDir") === "asc" & searchParams.get("sortBy") === headerName){
-                    sortBy = "des"
+                    sortDir = "des"
                 }
             }
-            window.location.search = `?sortBy=${headerName}&sortDir=${sortBy}`
+            window.location.search = `?sortBy=${headerName}&sortDir=${sortDir}`
         }
     table
         thead 
