@@ -11,8 +11,8 @@ const file = fs.readFileSync(
 const productData = JSON.parse(file);
 
 router.get("/", (req, res) => {
-    const sortBy = req.query.sortBy || ID;
-    const sortDir = req.query.sortDir || ID;
+    const sortBy = req.query.sortBy || "ID";
+    const sortDir = req.query.sortDir || "asc";
 
     res.render("products", {
         data: tableSort(productData, sortBy, sortDir),
