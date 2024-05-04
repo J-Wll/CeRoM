@@ -18,8 +18,11 @@ block content
             tr 
                 each column in Object.keys(data[0])
                     th(onclick=`addQuery('${column}')`) #{column}
+                //- th 
         tbody 
             each row in data
                 tr
                     each column in row
                         td #{column}
+                    td 
+                        a(href="") Edit
