@@ -17,8 +17,7 @@ block content
         thead 
             tr 
                 each column in Object.keys(data[0])
-                    th 
-                        button(onclick=`addQuery('${column}')`) #{column}
+                    th(onclick=`addQuery('${column}')`) #{column}
         tbody 
             each row in data
                 tr
