@@ -2,7 +2,7 @@ function getData(dataPath, sortBy, sortDir) {
     const fs = require("fs");
     const path = require("path");
 
-    const tableSort = require("../public/js/tableSort")
+    const tableSort = require("./tableSort")
 
     const file = fs.readFileSync(
         path.resolve(__dirname, dataPath)

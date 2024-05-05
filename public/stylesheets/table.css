@@ -1,5 +1,6 @@
 table {
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
+    border-spacing: 0;
 }
 
 th,
@@ -7,6 +8,28 @@ td {
     border: solid 1px black;
     padding: 0.5em;
 }
+
+/* Corner rounding for the table, needs border-spacing 0 on the table instead of border-collapse */
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 5px;
+}
+
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 5px;
+}
+
+table tr:first-child td:last-child {
+    border-top-right-radius: 5px;
+}
+
+table tr:first-child th:first-child {
+    border-top-left-radius: 5px;
+}
+
+table tr:first-child th:last-child {
+    border-top-right-radius: 5px;
+}
+
 
 th {
     background-color: rgb(236, 236, 236);

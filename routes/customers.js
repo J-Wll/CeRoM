@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const getData = require("../middleware/getData")
+const getData = require("../js/getData")
 
 router.get("/", (req, res) => {
     const sortBy = req.query.sortBy || "ID";
