@@ -17,7 +17,8 @@ block content
         thead 
             tr 
                 each column in Object.keys(data[0])
-                    th(onclick=`addQuery('${column}')`) #{column}
+                    th 
+                        button(onclick=`addQuery('${column}')` aria-label=`Sort ${column}`) #{column}
                 //- th 
         tbody 
             each row in data

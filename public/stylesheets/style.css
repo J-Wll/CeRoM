@@ -1,10 +1,24 @@
 body {
   padding: 50px;
+  padding-top: 20px;
+  font: 1rem "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+button {
   font: 1rem "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00638a;
+}
+
+header {
+  max-width: 2000px;
+  font-size: 1.1rem;
+  padding: 10px;
+  font-weight: bold;
+  border: 1px solid black;
+  border-radius: 5px;
 }
 
 header a {
@@ -14,11 +28,4 @@ header a {
 
 .float-right {
   float: right
-}
-
-header {
-  font-size: 1.1rem;
-  padding: 5px;
-  border: 1px solid black;
-  border-radius: 5px;
 }
