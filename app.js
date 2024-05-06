@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require("express-session");
+const mongoose = require("mongoose");
 
 const app = express();
 
@@ -16,9 +17,26 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false },
   isAuthenticated: false,
-  crud: [],
+  username: "NOT LOGGED IN",
   admin: false,
+  create: false,
+  read: false,
+  update: false,
+  delete: false
 }))
+
+mongoose.set("strictQuery", true);
+mongoose.connect(
+  process.env.MONGO_URI, {
+  family: 4,
+}
+).then(
+  () => {
+    console.log("Connected to MongoDB");
+  }
+).catch((error) => {
+  console.error(`Connection error ${error}`);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -33,3 +33,11 @@ block content
                         td #{column}
                     td 
                         a(href="") Edit
+            tr
+                each column in Object.keys(data[0])
+                    td 
+                        if !noEdit.includes(column)
+                            input(placeholder=column)
+                td
+                    button Add
+

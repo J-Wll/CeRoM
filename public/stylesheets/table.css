@@ -12,6 +12,11 @@ td {
     padding: 0.5em;
 }
 
+td input {
+    box-sizing: border-box;
+    width: 100%;
+}
+
 th {
     background-color: rgb(236, 236, 236);
     cursor: pointer;

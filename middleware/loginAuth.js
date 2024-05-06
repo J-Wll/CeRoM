@@ -52,6 +52,7 @@ function authMiddleware(req, res, next) {
 
     req.session.isAuthenticated = true;
     req.session.username = inpUsername;
+    req.session.read = true;
     req.session.flash = {
       type: "message",
       message: `You have successfully logged in as ${inpUsername}`,

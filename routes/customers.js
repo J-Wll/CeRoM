@@ -19,7 +19,8 @@ router.get("/", (req, res) => {
 
     res.render("products", {
         data: productData,
-        title: "Customers"
+        title: "Customers",
+        noEdit: ["ID", "Customer logs"]
     })
 })
 

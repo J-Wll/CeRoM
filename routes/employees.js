@@ -19,7 +19,8 @@ router.get("/", (req, res) => {
 
     res.render("products", {
         data: productData,
-        title: "Employees"
+        title: "Employees",
+        noEdit: ["ID", "Password hash"]
     })
 })
 

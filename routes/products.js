@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const crudController = require('../controllers/crudController');
 
 const getData = require("../js/getData")
 
@@ -19,8 +20,13 @@ router.get("/", (req, res) => {
 
     res.render("products", {
         data: productData,
-        title: "Products"
+        title: "Products",
+        noEdit: ["ID"]
     })
 })
+
+
+// router.post("/create", crudController.create);
+router.post('/create/:model', crudController.create);
 
 module.exports = router;
