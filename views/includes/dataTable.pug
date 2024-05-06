@@ -4,7 +4,13 @@ block content
     script.
         function addQuery(headerName){
             const searchParams = new URLSearchParams(window.location.search);
-            let sortDir = "asc"
+            let sortDir = "asc";
+
+            //- edge case for when the table is sorted by default but not in params, this makes it so the user doesn't have to double click to sort it
+            if(headerName === "ID" && !searchParams.has("sortDir")){
+                sortDir = "des"
+            }
+
             if(searchParams.has("sortDir")){
                 //- if it is currently ascending and it is the same header, then set to des
                 if(searchParams.get("sortDir") === "asc" & searchParams.get("sortBy") === headerName){

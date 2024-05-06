@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    if message
+        p= message.message
+
+    form(action="/login/submit" method="post")
+        input(placeholder="username" name="username" id="username")
+        input(type="password" placeholder="password" name="password" id="password")
+        button(type="submit") login  

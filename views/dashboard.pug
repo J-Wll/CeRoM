@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  include includes/header.pug
+  h1 CeRoM
+  p Welcome to CeRoM
+
+  if message
+    p= message.message
+
