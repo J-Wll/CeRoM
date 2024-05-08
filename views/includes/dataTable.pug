@@ -19,6 +19,8 @@ block content
             }
             window.location.search = `?sortBy=${headerName}&sortDir=${sortDir}`
         }
+
+
     table
         thead 
             tr 
@@ -32,12 +34,13 @@ block content
                     each column in row
                         td #{column}
                     td 
-                        a(href="") Edit
+                        a(href=`/single/${row._id}`) View/Edit 
             tr
-                each column in Object.keys(data[0])
-                    td 
-                        if !noEdit.includes(column)
-                            input(placeholder=column)
-                td
-                    button Add
+                form(action=`items/create/${model}` method="post")
+                    each column in Object.keys(data[0])
+                        td 
+                            if !noEdit.includes(column)
+                                input(placeholder=column name=column id=column)
+                    td
+                        button Add
 

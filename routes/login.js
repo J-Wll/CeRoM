@@ -1,6 +1,6 @@
-var express = require("express");
-var router = express.Router();
-var loginAuth = require("../middleware/loginAuth");
+const express = require("express");
+const router = express.Router();
+const loginAuth = require("../middleware/loginAuth");
 
 router.get("/", function (req, res) {
     if (req.session.isAuthenticated) {

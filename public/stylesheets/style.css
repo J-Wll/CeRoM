@@ -1,6 +1,7 @@
 body {
-  padding: 50px;
-  padding-top: 20px;
+  padding: 3em;
+  padding-top: 2em;
+  padding-bottom: 0em;
   font: 1rem "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
