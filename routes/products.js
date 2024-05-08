@@ -5,10 +5,10 @@ const checkAuth = require("../middleware/checkAuth");
 const tableSort = require("../js/tableSort")
 
 router.get("/", checkAuth, async (req, res) => {
-    const sortBy = req.query.sortBy || "ID";
+    const sortBy = req.query.sortBy || "_id";
     const sortDir = req.query.sortDir || "asc";
 
-    let items = await crudController.getAll(req, "product");
+    let items = await crudController.getAll(req, res, "product");
     items = tableSort(items, sortBy, sortDir);
     console.log("ffff" + items + "bbbb");
 
@@ -16,7 +16,9 @@ router.get("/", checkAuth, async (req, res) => {
         data: items,
         title: "Products",
         noEdit: ["ID", "_id", "__v"],
-        model: "product"
+        model: "product",
+        sortedBy: sortBy,
+        sortedDir: sortDir
     })
 })
 

@@ -7,7 +7,7 @@ block content
             let sortDir = "asc";
 
             //- edge case for when the table is sorted by default but not in params, this makes it so the user doesn't have to double click to sort it
-            if(headerName === "ID" && !searchParams.has("sortDir")){
+            if((headerName === "ID" || headerName == "_id") && !searchParams.has("sortDir")){
                 sortDir = "des"
             }
 
@@ -21,12 +21,25 @@ block content
         }
 
 
+    label Limit results to:     
+    select
+        option 10
+        option 25
+        option 50
+        option 100
+        option 200
+
     table
         thead 
             tr 
                 each column in Object.keys(data[0])
                     th 
-                        button(onclick=`addQuery('${column}')` aria-label=`Sort ${column}`) #{column}
+                        button(onclick=`addQuery('${column}')` aria-label=`Sort ${column}`) #{column} 
+                            if sortedBy === column 
+                                if sortedDir === "asc"
+                                    span ▲
+                                else 
+                                    span ▼
                 //- th 
         tbody 
             each row in data
