@@ -1,21 +1,33 @@
 const express = require('express');
 const router = express.Router();
+const crudController = require('../controllers/crudController');
 const checkAuth = require("../middleware/checkAuth");
 
-const getData = require("../js/getData")
+router.get("/", checkAuth, async (req, res) => {
+    const sortBy = req.query.sortBy || "_id";
+    const sortDir = parseInt(req.query.sortDir) || 1;
+    const limit = req.query.limit || 10;
 
-router.get("/", checkAuth, (req, res) => {
-    const sortBy = req.query.sortBy || "ID";
-    const sortDir = req.query.sortDir || "asc";
-
-    const items = getData("../data/employee_data.json", sortBy, sortDir);
+    const items = await crudController.getAll(req, res, "employee", limit, sortBy, sortDir);
 
     res.render("items", {
         data: items,
         title: "Employees",
-        noEdit: ["ID", "Password hash"],
-        model: "employee"
+        noEdit: ["_id", "__v", "Password hash"],
+        sortedBy: sortBy,
+        sortedDir: sortDir,
+        limited: limit,
+        createPath: "/employees/create"
     })
+
+    const Model = require("../models/product");
+    const fields = Object.keys(Model.schema.paths);
+    console.log(fields);
+
 })
+
+router.post('/create', checkAuth, async (req, res) => {
+    await crudController.create(req, res, this, "employee", "/employees");
+});
 
 module.exports = router;

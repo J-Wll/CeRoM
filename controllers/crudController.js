@@ -16,18 +16,22 @@ exports.getAll = async (req, res, model, limit, sortBy, sortDir) => {
 };
 
 
-exports.create = async (req, res, next) => {
+exports.create = async (req, res, next, modelName, returnTo = undefined) => {
     // Add crud perm check and admin check for employees
     // if (!req.session.create || !req.session.isAuthenticated) {
     //     res.json({ message: "Not signed in or invalid permissions" });
     //     return;
     // }
-    const modelName = req.params.model;
+    // const modelName = req.params.model;
     try {
         const Model = require("../models/" + modelName);
         const newItem = await new Model(req.body);
         await newItem.save();
-        res.redirect(req.get("referer"))
+        if (returnTo) {
+            res.redirect(returnTo);
+        } else {
+            res.json({ added: newItem });
+        }
     } catch (error) {
         console.error(error.message);
     }

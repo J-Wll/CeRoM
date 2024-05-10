@@ -54,7 +54,6 @@ block content
                                     span ▲
                                 else 
                                     span ▼
-                //- th 
         tbody 
             each row in data
                 tr
@@ -63,7 +62,7 @@ block content
                     td 
                         a(href=`/single/${row._id}`) View/Edit 
             tr
-                form(action=`items/create/${model}` method="post")
+                form(action=createPath method="post")
                     each column in Object.keys(data[0])
                         td 
                             if !noEdit.includes(column)

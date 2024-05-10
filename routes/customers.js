@@ -1,21 +1,30 @@
 const express = require('express');
 const router = express.Router();
+const crudController = require('../controllers/crudController');
 const checkAuth = require("../middleware/checkAuth");
 
-const getData = require("../js/getData")
+router.get("/", checkAuth, async (req, res) => {
+    const sortBy = req.query.sortBy || "_id";
+    const sortDir = parseInt(req.query.sortDir) || 1;
+    const limit = req.query.limit || 10;
 
-router.get("/", checkAuth, (req, res) => {
-    const sortBy = req.query.sortBy || "ID";
-    const sortDir = req.query.sortDir || "asc";
-
-    const items = getData("../data/customer_data.json", sortBy, sortDir);
+    // COULD MOVE ALL OF THIS INTO CRUD CONTROLLER, PASS IN ALL THESE ARGS AS AN OBJ
+    const items = await crudController.getAll(req, res, "customer", limit, sortBy, sortDir);
 
     res.render("items", {
         data: items,
         title: "Customers",
-        noEdit: ["ID", "Customer logs"],
-        model: "customer"
+        noEdit: ["_id", "__v", "Customer logs"],
+        sortedBy: sortBy,
+        sortedDir: sortDir,
+        limited: limit,
+        createPath: "/customers/create"
     })
 })
 
 module.exports = router;
+
+
+router.post('/create', checkAuth, async (req, res) => {
+    await crudController.create(req, res, this, "customer", "/customers");
+});
