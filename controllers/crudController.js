@@ -7,7 +7,8 @@ exports.getAll = async (req, res, model, limit, sortBy, sortDir) => {
     const modelName = model;
     try {
         const Model = require("../models/" + modelName);
-        const items = await Model.find(null, null, { limit: limit, sort: { [sortBy]: sortDir } }).lean();
+        // collation is for sorting case insensitive, lean is to remove non-needed fields (was causing an issue on the table)
+        const items = await Model.find(null, null, { limit: limit, sort: { [sortBy]: sortDir }, collation: { locale: 'en' } }).lean();
         return items;
     } catch (error) {
         console.error(error.message);
