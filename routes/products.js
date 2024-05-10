@@ -6,11 +6,11 @@ const tableSort = require("../js/tableSort")
 
 router.get("/", checkAuth, async (req, res) => {
     const sortBy = req.query.sortBy || "_id";
-    const sortDir = req.query.sortDir || "asc";
+    const sortDir = parseInt(req.query.sortDir) || 1;
+    const limit = req.query.limit || 10;
 
-    let items = await crudController.getAll(req, res, "product");
-    items = tableSort(items, sortBy, sortDir);
-    console.log("ffff" + items + "bbbb");
+    let items = await crudController.getAll(req, res, "product", limit, sortBy, sortDir);
+    // items = tableSort(items, sortBy, sortDir);
 
     res.render("items", {
         data: items,
@@ -18,7 +18,8 @@ router.get("/", checkAuth, async (req, res) => {
         noEdit: ["ID", "_id", "__v"],
         model: "product",
         sortedBy: sortBy,
-        sortedDir: sortDir
+        sortedDir: sortDir,
+        limited: limit
     })
 })
 

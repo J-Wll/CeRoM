@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
-exports.getAll = async (req, res, model) => {
+exports.getAll = async (req, res, model, limit, sortBy, sortDir) => {
     // if (!req.session.read || !req.session.isAuthenticated) {
 
     // }
     const modelName = model;
     try {
         const Model = require("../models/" + modelName);
-        const items = await Model.find().lean();
-        console.log(items);
+        const items = await Model.find(null, null, { limit: limit, sort: { [sortBy]: sortDir } }).lean();
         return items;
     } catch (error) {
         console.error(error.message);
@@ -23,7 +22,6 @@ exports.create = async (req, res, next) => {
     //     return;
     // }
     const modelName = req.params.model;
-    console.log(modelName);
     try {
         const Model = require("../models/" + modelName);
         const newItem = await new Model(req.body);

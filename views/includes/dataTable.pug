@@ -2,41 +2,55 @@ extends tableLayout
 
 block content
     script.
-        function addQuery(headerName){
+        window.onload = () => document.getElementById("limitSelect").value = #{limited};
+
+        function addSort(headerName){
             const searchParams = new URLSearchParams(window.location.search);
-            let sortDir = "asc";
+            let sortDir = 1;
 
             //- edge case for when the table is sorted by default but not in params, this makes it so the user doesn't have to double click to sort it
             if((headerName === "ID" || headerName == "_id") && !searchParams.has("sortDir")){
-                sortDir = "des"
+                sortDir = -1;
             }
 
             if(searchParams.has("sortDir")){
                 //- if it is currently ascending and it is the same header, then set to des
-                if(searchParams.get("sortDir") === "asc" & searchParams.get("sortBy") === headerName){
-                    sortDir = "des"
+                if(searchParams.get("sortDir") === "1" & searchParams.get("sortBy") === headerName){
+                    sortDir = -1;
+                    console.log(sortDir);
                 }
             }
-            window.location.search = `?sortBy=${headerName}&sortDir=${sortDir}`
+            searchParams.set("sortBy", headerName);
+            searchParams.set("sortDir", sortDir);
+            window.location.search = searchParams.toString();
+        }
+
+        function addLimit(quant){
+            const searchParams = new URLSearchParams(window.location.search);
+            searchParams.set("limit", quant);
+            window.location.search = searchParams.toString();
         }
 
 
     label Limit results to:     
-    select
-        option 10
-        option 25
-        option 50
-        option 100
-        option 200
+    select(id="limitSelect" onchange="addLimit(this.value)")
+        option(value="10") 10
+        option(value="25") 25
+        option(value="50") 50
+        option(value="75") 75
+        option(value="100") 100
+        option(value="150") 150
+        option(value="200") 200
 
+    p Entries: #{data.length}
     table
         thead 
             tr 
                 each column in Object.keys(data[0])
                     th 
-                        button(onclick=`addQuery('${column}')` aria-label=`Sort ${column}`) #{column} 
+                        button(onclick=`addSort('${column}')` aria-label=`Sort ${column}`) #{column} 
                             if sortedBy === column 
-                                if sortedDir === "asc"
+                                if sortedDir === 1
                                     span ▲
                                 else 
                                     span ▼
