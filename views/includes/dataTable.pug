@@ -60,9 +60,9 @@ block content
                     each column in row
                         td #{column}
                     td 
-                        a(href=`/single/${row._id}`) View/Edit 
+                        a(href=`${basePath}/${row._id}`) View/Edit 
             tr
-                form(action=createPath method="post")
+                form(action=`${basePath}/create` method="post")
                     each column in Object.keys(data[0])
                         td 
                             if !noEdit.includes(column)

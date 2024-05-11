@@ -8,7 +8,7 @@ router.get("/", checkAuth, async (req, res) => {
     const args = {
         title: "Employees",
         noEdit: ["_id", "__v", "encrypted_pass"],
-        createPath: "/employees/create"
+        basePath: "/employees"
     }
     itemsRender(req, res, "employee", args);
 })

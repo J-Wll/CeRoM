@@ -15,6 +15,21 @@ exports.getAll = async (req, res, model, limit, sortBy, sortDir) => {
     }
 };
 
+exports.getOne = async (req, res, model, id) => {
+    // if (!req.session.read || !req.session.isAuthenticated) {
+
+    // }
+    const modelName = model;
+    try {
+        const Model = require("../models/" + modelName);
+        const item = await Model.findById(id);
+        return item;
+    } catch (error) {
+        console.error(error.message);
+    }
+};
+
+
 
 exports.create = async (req, res, next, modelName, returnTo = undefined) => {
     // Add crud perm check and admin check for employees
