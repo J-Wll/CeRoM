@@ -8,7 +8,8 @@ router.get("/", checkAuth, async (req, res) => {
     const args = {
         title: "Employees",
         noEdit: ["_id", "__v", "encrypted_pass"],
-        basePath: "/employees"
+        basePath: "/employees",
+        admin: req.session.admin,
     }
     itemsRender(req, res, "employee", args);
 })

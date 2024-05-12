@@ -5,3 +5,9 @@ block content
     include includes/header.pug
     h1 #{title}
     include includes/dataTable.pug 
+
+    if admin === true &&  title === "Employees"
+        br
+        hr  
+        br
+        include includes/addEmployee.pug

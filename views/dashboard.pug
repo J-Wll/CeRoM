@@ -6,8 +6,13 @@ block content
   p Welcome to CeRoM
 
   p You are logged in as: #{username}
-  p You have the following permissions: [#{perms}]
+  p You have the following permissions: [#{perms} ]
 
   if message
     p= message.message
 
+  if admin
+    br
+    hr
+    h2 Admin controls
+    include includes/addEmployee.pug 

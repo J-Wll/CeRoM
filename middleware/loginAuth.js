@@ -52,7 +52,12 @@ function authMiddleware(req, res, next) {
 
     req.session.isAuthenticated = true;
     req.session.username = inpUsername;
+
+    // TODO: PERM TESTING REMOVE
     req.session.read = true;
+    req.session.admin = true;
+
+
     req.session.flash = {
       type: "message",
       message: `You have successfully logged in as ${inpUsername}`,

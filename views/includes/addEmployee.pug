@@ -1,0 +1,32 @@
+
+button() Register a user 
+
+form
+    p Either have the employee type their desired password here or give and send them a secure password then instruct them to login and change their password ASAP.
+    input(placeholder="Full name")
+    input(placeholder="Unique username")
+    input(placeholder="Password")
+
+    p Permissions:
+    div
+        label Create: 
+        input(type="checkbox" name="Create")
+    div 
+        label Read: 
+        input(type="checkbox" name="Read")
+    div
+        label Update: 
+        input(type="checkbox" name="Update")
+    div
+        label Delete: 
+        input(type="checkbox" name="Delete")
+    div
+        label View sensitive customer information (Email, Phone, Address): 
+        input(type="checkbox" name="Customer information")
+    div
+        //- only the root account can add new admins, admins get all permissions
+        label Admin (Can only be given if you are the root admin, gives all other permissions): 
+        input(type="checkbox" name="Admin")
+
+    br
+    button Add
