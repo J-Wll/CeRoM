@@ -14,7 +14,7 @@ async function itemsRender(req, res, model, args) {
         let fields = Object.keys(Model.schema.paths);
         items = [{}]
         fields.forEach((f) => {
-            items[0][f] = "";
+            items[0][f] = "empty";
         })
     }
 
