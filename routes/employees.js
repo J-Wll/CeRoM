@@ -18,6 +18,14 @@ router.get("/", checkAuth, async (req, res) => {
 })
 
 router.post('/create', checkAuth, bodyParser.json(), async (req, res) => {
+    if (req.body.password.length < 8) {
+        req.session.flash = {
+            type: "error",
+            message: "Password not long enough (needs to >= 8)",
+        };
+        return res.redirect(req.get("referer"));
+    }
+
     const hashedPassword = await hashPassword(req.body.password);
     console.log("HHH", hashedPassword);
     req.body.password = hashedPassword;

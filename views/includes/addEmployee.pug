@@ -11,6 +11,9 @@ script.
         }
     }
 
+if message
+    p= message.message
+
 button(id="toggleButton" onclick="toggleContent()") Show employee registration form
 
 form(id="userForm" style="display: none;" action=`employees/create` method="post")

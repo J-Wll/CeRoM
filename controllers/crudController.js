@@ -43,9 +43,9 @@ exports.create = async (req, res, next, modelName, returnTo = undefined) => {
         const newItem = await new Model(req.body);
         await newItem.save();
         if (returnTo) {
-            res.redirect(returnTo);
+            return res.redirect(returnTo);
         } else {
-            res.json({ added: newItem });
+            return res.json({ added: newItem });
         }
     } catch (error) {
         console.error(error.message);

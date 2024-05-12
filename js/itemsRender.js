@@ -1,6 +1,10 @@
 const crudController = require('../controllers/crudController');
 
 async function itemsRender(req, res, model, args) {
+    if (req.session.flash) {
+        res.locals.message = req.session.flash;
+        delete req.session.flash;
+    }
 
     const sortBy = req.query.sortBy || "_id";
     const sortDir = parseInt(req.query.sortDir) || 1;

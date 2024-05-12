@@ -8,7 +8,7 @@ router.get("/", function (req, res) {
             type: "error",
             message: "Already logged in",
         };
-        res.redirect("/");
+        return res.redirect("/");
     }
 
     if (req.session.flash) {
@@ -23,7 +23,7 @@ router.post("/submit", loginAuth, function (req, res, next) {
     console.log("done");
     console.log(req.session);
     if (req.session.isAuthenticated) {
-        res.redirect("/");
+        return res.redirect("/");
     }
 });
 

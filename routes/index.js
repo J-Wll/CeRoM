@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
       type: "error",
       message: "Login required"
     })
-    res.redirect("/login");
+    return res.redirect("/login");
   }
 
   if (req.session.flash) {

@@ -4,7 +4,7 @@ function checkAuth(req, res, next) {
             type: "error",
             message: "Login required"
         })
-        res.redirect("/login");
+        return res.redirect("/login");
     }
     next();
 }
