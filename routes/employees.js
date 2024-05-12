@@ -12,6 +12,7 @@ router.get("/", checkAuth, async (req, res) => {
         noEdit: ["_id", "__v", "encrypted_pass"],
         basePath: "/employees",
         admin: req.session.admin,
+        notEditable: true
     }
     itemsRender(req, res, "employee", args);
 })
