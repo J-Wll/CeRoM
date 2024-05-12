@@ -1,32 +1,43 @@
+script.
+    function toggleContent() {
+        const content = document.getElementById("userForm");
+        const toggleButton = document.getElementById("toggleButton");
+        if (content.style.display === "none") {
+            content.style.display = "block";
+            toggleButton.innerText = "Hide employee registration form"
+        } else {
+            content.style.display = "none";
+            toggleButton.innerText = "Show employee registration form"
+        }
+    }
 
-button() Register a user 
+button(id="toggleButton" onclick="toggleContent()") Show employee registration form
 
-form
+form(id="userForm" style="display: none;" action=`employees/create` method="post")
     p Either have the employee type their desired password here or give and send them a secure password then instruct them to login and change their password ASAP.
-    input(placeholder="Full name")
-    input(placeholder="Unique username")
-    input(placeholder="Password")
-
+    input(placeholder="Full name" id="name" name="name" aria-label="Input for employees full name")
+    input(placeholder="Unique username" id="username" name="username" aria-label="Input for employees unique username")
+    input(placeholder="Password" id="password" name="password" aria-label="Input for employees password")
     p Permissions:
     div
-        label Create: 
-        input(type="checkbox" name="Create")
-    div 
-        label Read: 
-        input(type="checkbox" name="Read")
+        label Create:
+        input(type="checkbox" name="create" aria-label="Checkbox for create permission")
     div
-        label Update: 
-        input(type="checkbox" name="Update")
+        label Read:
+        input(type="checkbox" name="read" aria-label="Checkbox for read permission")
     div
-        label Delete: 
-        input(type="checkbox" name="Delete")
+        label Update:
+        input(type="checkbox" name="update" aria-label="Checkbox for update permission")
     div
-        label View sensitive customer information (Email, Phone, Address): 
-        input(type="checkbox" name="Customer information")
+        label Delete:
+        input(type="checkbox" name="delete" aria-label="Checkbox for delete permission")
+    div
+        label View sensitive customer information (Email, Phone, Address):
+        input(type="checkbox" name="customer_information" aria-label="Checkbox for permission to view sensitive customer information")
     div
         //- only the root account can add new admins, admins get all permissions
-        label Admin (Can only be given if you are the root admin, gives all other permissions): 
-        input(type="checkbox" name="Admin")
+        label Admin (Can only be given if you are the root admin, gives all other permissions):
+        input(type="checkbox" name="admin" aria-label="Checkbox for assigning admin")
 
     br
-    button Add
+    button Register
