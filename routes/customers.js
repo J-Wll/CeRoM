@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const crudController = require('../controllers/crudController');
-const checkAuth = require("../middleware/checkAuth");
+const check = require("../middleware/check");
 const itemsRender = require("../js/itemsRender");
 
-router.get("/", checkAuth, async (req, res) => {
+router.get("/", check.login, check.read, async (req, res) => {
     const args = {
         title: "Customers",
         noEdit: ["_id", "__v", "Customer logs"],
@@ -14,7 +14,7 @@ router.get("/", checkAuth, async (req, res) => {
     itemsRender(req, res, "customer", args);
 })
 
-router.post('/create', checkAuth, async (req, res) => {
+router.post('/create', check.login, check.create, async (req, res) => {
     await crudController.create(req, res, this, "customer", "/customers");
 });
 

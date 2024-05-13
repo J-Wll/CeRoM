@@ -2,4 +2,10 @@
 
 //- Conditional include for editing each type, product, customer, employee and customer log (customer log stored with customer)
 
-#{data}
+extends layout
+
+block content
+
+    include includes/header.pug
+
+    #{data}

@@ -11,36 +11,52 @@ script.
         }
     }
 
+    function submitForm() {
+        const permissions = {
+            create: document.getElementById("create").checked,
+            read: document.getElementById("read").checked,
+            update: document.getElementById("update").checked,
+            delete: document.getElementById("delete").checked,
+            viewSensitive: document.getElementById("viewSensitive").checked,
+            admin: document.getElementById("admin").checked
+        };
+        const form = document.getElementById("userForm");
+        form.elements['permissions'].value = JSON.stringify(permissions);
+        form.submit();
+    }
+
 if message
     p= message.message
 
 button(id="toggleButton" onclick="toggleContent()") Show employee registration form
 
-form(id="userForm" style="display: none;" action=`employees/create` method="post")
+form(id="userForm" style="display: none;" action="/employees/create" method="post")
     p Either have the employee type their desired password here or give and send them a secure password then instruct them to login and change their password ASAP.
-    input(placeholder="Full name" id="name" name="name" aria-label="Input for employees full name")
-    input(placeholder="Unique username" id="username" name="username" aria-label="Input for employees unique username")
-    input(placeholder="Password" id="password" name="password" aria-label="Input for employees password")
+    input(placeholder="Full name" id="name" name="name" aria-label="Input for employee's full name")
+    input(placeholder="Unique username" id="username" name="username" aria-label="Input for employee's unique username")
+    input(placeholder="Password" id="password" name="password" aria-label="Input for employee's password")
     p Permissions:
+    input(type="hidden" name="permissions")
     div
-        label Create:
-        input(type="checkbox" name="create" aria-label="Checkbox for create permission")
+        label(for="create") Create:
+        input(type="checkbox" name="create" id="create" aria-label="Checkbox for create permission")
     div
-        label Read:
-        input(type="checkbox" name="read" aria-label="Checkbox for read permission")
+        label(for="read") Read:
+        input(type="checkbox" name="read" id="read" aria-label="Checkbox for read permission")
     div
-        label Update:
-        input(type="checkbox" name="update" aria-label="Checkbox for update permission")
+        label(for="update") Update:
+        input(type="checkbox" name="update" id="update" aria-label="Checkbox for update permission")
     div
-        label Delete:
-        input(type="checkbox" name="delete" aria-label="Checkbox for delete permission")
+        label(for="delete") Delete:
+        input(type="checkbox" name="delete" id="delete" aria-label="Checkbox for delete permission")
     div
-        label View sensitive customer information (Email, Phone, Address):
-        input(type="checkbox" name="customer_information" aria-label="Checkbox for permission to view sensitive customer information")
+        label(for="viewSensitive") View sensitive customer information (Email, Phone, Address):
+        input(type="checkbox" name="viewSensitive" id="viewSensitive" aria-label="Checkbox for permission to view sensitive customer information")
     div
         //- only the root account can add new admins, admins get all permissions
-        label Admin (Can only be given if you are the root admin, gives all other permissions):
-        input(type="checkbox" name="admin" aria-label="Checkbox for assigning admin")
-
+        label(for="admin") Admin (Can only be given if you are the root admin, gives all other permissions):
+        input(type="checkbox" name="admin" id="admin" aria-label="Checkbox for assigning admin")
     br
-    button Register
+    button(type="button" onclick="submitForm()") Register
+
+

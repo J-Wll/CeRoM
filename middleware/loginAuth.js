@@ -10,7 +10,6 @@ const fs = require("fs");
 const path = require("path");
 
 const bcrypt = require("bcrypt");
-const saltRounds = 10;
 
 const file = fs.readFileSync(path.resolve(__dirname, "../data/users.json"));
 
@@ -54,7 +53,11 @@ function authMiddleware(req, res, next) {
     req.session.username = inpUsername;
 
     // TODO: PERM TESTING REMOVE
+    req.session.create = true;
     req.session.read = true;
+    req.session.update = true;
+    req.session.delete = true;
+    req.session.viewSensitive = true;
     req.session.admin = true;
 
 

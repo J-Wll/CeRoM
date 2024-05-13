@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-exports.getAll = async (req, res, model, limit = undefined, sortBy = "_id", sortDir = 1) => {
+async function getAll(req, res, model, limit = undefined, sortBy = "_id", sortDir = 1) {
     // if (!req.session.read || !req.session.isAuthenticated) {
 
     // }
@@ -13,9 +13,9 @@ exports.getAll = async (req, res, model, limit = undefined, sortBy = "_id", sort
     } catch (error) {
         console.error(error.message);
     }
-};
+}
 
-exports.getOne = async (req, res, model, id) => {
+async function getOne(req, res, model, id) {
     // if (!req.session.read || !req.session.isAuthenticated) {
 
     // }
@@ -27,11 +27,9 @@ exports.getOne = async (req, res, model, id) => {
     } catch (error) {
         console.error(error.message);
     }
-};
+}
 
-
-
-exports.create = async (req, res, next, modelName, returnTo = undefined) => {
+async function create(req, res, next, modelName, returnTo = undefined) {
     // Add crud perm check and admin check for employees
     // if (!req.session.create || !req.session.isAuthenticated) {
     //     res.json({ message: "Not signed in or invalid permissions" });
@@ -50,5 +48,12 @@ exports.create = async (req, res, next, modelName, returnTo = undefined) => {
     } catch (error) {
         console.error(error.message);
     }
+}
+
+const crudController = {
+    getAll,
+    getOne,
+    create
 };
 
+module.exports = crudController;
