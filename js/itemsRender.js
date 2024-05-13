@@ -22,8 +22,6 @@ async function itemsRender(req, res, model, args) {
         })
     }
 
-    console.log(items);
-
     res.render("items", {
         ...args,
         data: items,

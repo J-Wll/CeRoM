@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-exports.getAll = async (req, res, model, limit, sortBy, sortDir) => {
+exports.getAll = async (req, res, model, limit = undefined, sortBy = "_id", sortDir = 1) => {
     // if (!req.session.read || !req.session.isAuthenticated) {
 
     // }
