@@ -12,7 +12,8 @@ router.get("/", checkAuth, async (req, res) => {
         noEdit: ["_id", "__v", "encrypted_pass"],
         basePath: "/employees",
         admin: req.session.admin,
-        notEditable: true
+        notEditable: true,
+        description: "Employees must be added via the registration form"
     }
     itemsRender(req, res, "employee", args);
 })

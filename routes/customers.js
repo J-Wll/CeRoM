@@ -8,7 +8,8 @@ router.get("/", checkAuth, async (req, res) => {
     const args = {
         title: "Customers",
         noEdit: ["_id", "__v", "Customer logs"],
-        basePath: "/customers"
+        basePath: "/customers",
+        description: "To view and edit customer logs, click on view/edit on the customer"
     }
     itemsRender(req, res, "customer", args);
 })

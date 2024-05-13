@@ -9,7 +9,8 @@ router.get("/", checkAuth, async (req, res) => {
     const args = {
         title: "Products",
         noEdit: ["_id", "__v"],
-        basePath: "/products"
+        basePath: "/products",
+        description: "Products"
     }
     itemsRender(req, res, "product", args);
 })
