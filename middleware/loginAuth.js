@@ -6,16 +6,11 @@
 //   {"username": "jill", "password": "p17"}
 // ]
 
-const fs = require("fs");
-const path = require("path");
+const crudController = require("../controllers/crudController");
 
 const bcrypt = require("bcrypt");
 
-const file = fs.readFileSync(path.resolve(__dirname, "../data/users.json"));
-
-const userData = JSON.parse(file);
-
-function authMiddleware(req, res, next) {
+async function authMiddleware(req, res, next) {
   function flashError(msg) {
     req.session.flash = {
       type: "error",
@@ -23,6 +18,8 @@ function authMiddleware(req, res, next) {
     };
     return res.redirect("/login");
   }
+
+  const userData = await crudController.getAll(req, res, "employee");
 
   const inpUsername = req.body.username;
   const inpPassword = req.body.password;
@@ -36,7 +33,6 @@ function authMiddleware(req, res, next) {
   if (!user) {
     console.log("test1")
     flashError("Invalid username or password");
-    return;
   }
 
   console.log(inpPassword, user.password);
@@ -59,6 +55,8 @@ function authMiddleware(req, res, next) {
     req.session.delete = true;
     req.session.viewSensitive = true;
     req.session.admin = true;
+
+
 
 
     req.session.flash = {
