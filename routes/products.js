@@ -17,7 +17,8 @@ router.get("/", check.login, check.read, async (req, res) => {
 
 router.get("/:id", check.login, check.read, async (req, res) => {
     const args = {
-        title: "Products",
+        title: "Product:",
+        nameField: "name",
         noEdit: ["_id", "__v"],
         editPath: "/products/edit"
     }

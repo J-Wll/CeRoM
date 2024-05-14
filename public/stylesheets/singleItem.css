@@ -1,4 +1,12 @@
 th {
     cursor: default;
-    padding: 0.5em;
+    padding: 0.75em;
+}
+
+td {
+    padding: 0.75em;
+}
+
+table tr:first-child td:last-child {
+    border-top-right-radius: 0px;
 }

@@ -3,20 +3,31 @@ const router = express.Router();
 const crudController = require('../controllers/crudController');
 const check = require("../middleware/check");
 const itemsRender = require("../js/itemsRender");
+const singleItemRender = require("../js/singleItemRender");
 const hashPassword = require('../js/hashPassword');
 const bodyParser = require('body-parser');
 
-router.get("/", check.login, check.read, async (req, res) => {
+router.get("/", check.login, check.admin, check.read, async (req, res) => {
     const args = {
         title: "Employees",
         noEdit: ["_id", "__v", "encrypted_pass"],
         basePath: "/employees",
         admin: req.session.admin,
         notEditable: true,
-        description: "Employees must be added via the registration form by an admin. Permissions can be viewed and changed by clicking view/edit on a single item",
+        description: "Employees must be added via the registration form by an admin. Permissions can be viewed and changed by clicking view/edit",
         rootAdmin: req.session.rootAdmin
     }
     itemsRender(req, res, "employee", args);
+})
+
+router.get("/:id", check.login, check.admin, check.read, async (req, res) => {
+    const args = {
+        title: "Employee:",
+        nameField: "username",
+        noEdit: ["_id", "__v"],
+        editPath: "/employees/edit"
+    }
+    singleItemRender(req, res, "employee", req.params.id, args);
 })
 
 router.post('/create', check.login, check.admin, check.create, bodyParser.json(), async (req, res) => {

@@ -6,11 +6,11 @@ extends layouts/singleItemLayout
 
 
 block content
-    link(rel='stylesheet' href='..public/singleItem.css')
-
     include includes/header.pug
 
     br
+
+    h2 #{title} #{data[nameField]}
 
     table
         thead 
