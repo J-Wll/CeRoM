@@ -52,10 +52,13 @@ form(id="userForm" style="display: none;" action="/employees/create" method="pos
     div
         label(for="viewSensitive") View sensitive customer information (Email, Phone, Address):
         input(type="checkbox" name="viewSensitive" id="viewSensitive" aria-label="Checkbox for permission to view sensitive customer information")
-    div
-        //- only the root account can add new admins, admins get all permissions
-        label(for="admin") Admin (Can only be given if you are the root admin, gives all other permissions):
-        input(type="checkbox" name="admin" id="admin" aria-label="Checkbox for assigning admin")
+    if rootAdmin
+        div
+            //- only the root account can add new admins, admins get all permissions
+            label(for="admin") Admin (Can only be given if you are the root admin, gives all other permissions):
+            input(type="checkbox" name="admin" id="admin" aria-label="Checkbox for assigning admin")
+    else 
+        p Only the rootAdmin can grant admin status
     br
     button(type="button" onclick="submitForm()") Register
 

@@ -13,7 +13,8 @@ router.get("/", check.login, check.read, async (req, res) => {
         basePath: "/employees",
         admin: req.session.admin,
         notEditable: true,
-        description: "Employees must be added via the registration form by an admin. Permissions can be viewed and changed by clicking view/edit on a single item"
+        description: "Employees must be added via the registration form by an admin. Permissions can be viewed and changed by clicking view/edit on a single item",
+        rootAdmin: req.session.rootAdmin
     }
     itemsRender(req, res, "employee", args);
 })
