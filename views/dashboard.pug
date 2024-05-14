@@ -1,4 +1,4 @@
-extends layout
+extends layouts/layout
 
 block content
   include includes/header.pug
@@ -8,11 +8,11 @@ block content
   p You are logged in as: #{username}
   p You have the following permissions: [#{perms} ]
 
-  if message
-    p= message.message
-
   if admin
     br
     hr
     h2 Admin controls
+    a(href="/employees") View employees
+    br
+    br
     include includes/addEmployee.pug 

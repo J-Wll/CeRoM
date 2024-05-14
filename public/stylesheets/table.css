@@ -1,5 +1,4 @@
 table {
-    /* border-collapse: collapse; */
     border-spacing: 0;
 }
 
@@ -33,7 +32,7 @@ th button {
     font-weight: 800;
 }
 
-/* Corner rounding for the table, needs border-spacing 0 on the table instead of border-collapse */
+/* Corner rounding for the table, needs border-spacing 0 on the table instead of border-collapse. Extra prop for top of edit */
 table tr:last-child td:first-child {
     border-bottom-left-radius: 5px;
 }

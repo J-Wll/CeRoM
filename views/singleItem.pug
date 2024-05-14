@@ -2,10 +2,23 @@
 
 //- Conditional include for editing each type, product, customer, employee and customer log (customer log stored with customer)
 
-extends layout
+extends layouts/singleItemLayout
+
 
 block content
+    link(rel='stylesheet' href='..public/singleItem.css')
 
     include includes/header.pug
 
-    #{data}
+    br
+
+    table
+        thead 
+            tr 
+                each header in Object.keys(data)
+                    th #{header}
+
+        tbody 
+            tr
+                each item in data
+                    td #{item}

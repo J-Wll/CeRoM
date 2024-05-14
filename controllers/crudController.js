@@ -22,7 +22,7 @@ async function getOne(req, res, model, id) {
     const modelName = model;
     try {
         const Model = require("../models/" + modelName);
-        const item = await Model.findById(id);
+        const item = await Model.findById(id).lean();
         return item;
     } catch (error) {
         console.error(error.message);
