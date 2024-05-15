@@ -6,7 +6,9 @@ block content
         a(href="/") Dashboard
         a(href="/customers") Customers
         a(href="/products") Products
-        a(href="/employees") Employees
-        a(href="/sign-out" class="move-right") Sign out
+        if admin
+            a(href="/employees") Employees
+        span(class="move-right")
+        a(href="/sign-out") Sign out
         a(href="/change-password") Change password
 

@@ -17,6 +17,7 @@ router.get('/', function (req, res, next) {
   }
 
   let perms = [];
+  if (req.session.rootAdmin) { perms.push(" Root Admin") };
   if (req.session.admin) { perms.push(" Admin") };
   if (req.session.create) { perms.push(" Create") };
   if (req.session.read) { perms.push(" Read") };

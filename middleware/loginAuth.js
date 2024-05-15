@@ -47,15 +47,15 @@ async function authMiddleware(req, res, next) {
     req.session.isAuthenticated = true;
     req.session.username = inpUsername;
 
-    // TODO: PERM TESTING REMOVE
-    req.session.create = true;
-    req.session.read = true;
-    req.session.update = true;
-    req.session.delete = true;
-    req.session.viewSensitive = true;
-    req.session.admin = true;
+    console.log(user);
 
-
+    req.session.create = user.permissions.create || false;
+    req.session.read = user.permissions.read || false;
+    req.session.update = user.permissions.update || false;
+    req.session.delete = user.permissions.delete || false;
+    req.session.viewSensitive = user.permissions.viewSensitive || false;
+    req.session.admin = user.permissions.admin || false;
+    req.session.rootAdmin = user.permissions.rootAdmin || false;
 
 
     req.session.flash = {
