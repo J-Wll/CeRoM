@@ -8,7 +8,8 @@ async function singleItemRender(req, res, model, id, args) {
 
     res.render("singleItem", {
         ...args,
-        data: item
+        data: item,
+        admin: req.session.admin
     })
 
 }
