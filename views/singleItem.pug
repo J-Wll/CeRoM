@@ -4,7 +4,6 @@
 
 extends layouts/singleItemLayout
 
-
 block content
     include includes/header.pug
 
@@ -22,3 +21,13 @@ block content
             tr
                 each item in data
                     td #{item}
+
+    br
+
+    //- This is ugly but dynamic includes (include #{includePath} do not seem to be supported)
+    if editInclude == "Products"
+        include includes/addEmployee
+    if editInclude == "Customers"
+        include includes/editCustomer
+    if editInclude == "Employees"
+        include includes/editEmployees

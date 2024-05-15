@@ -20,7 +20,8 @@ router.get("/:id", check.login, check.read, async (req, res) => {
         title: "Product:",
         nameField: "name",
         noEdit: ["_id", "__v"],
-        editPath: "/products/edit"
+        editPath: "/products/edit",
+        editInclude: "Products"
     }
     singleItemRender(req, res, "product", req.params.id, args);
 })
