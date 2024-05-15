@@ -6,9 +6,15 @@ block content
     if message
         p= message.message
 
-    form(action="/login/submit" method="post")
-        input(placeholder="username" name="username" id="username" autocomplete="username")
-        input(type="password" placeholder="password" name="password" id="password" autocomplete="current-password")
-        button(type="submit") login  
+    form(action="/login/submit" method="post" class="big-form")
+        label(for="username") Username:   
+        br
+        input(type="text" placeholder="Enter your username" name="username" id="username" autocomplete="username")
+        br
+        label(for="password") Password:  
+        br 
+        input(type="password" placeholder="Enter your password" name="password" id="password" autocomplete="current-password")
+        br
+        button(type="submit") Login  
 
     p Registration must be done by an Admin, please contact one if you need an account

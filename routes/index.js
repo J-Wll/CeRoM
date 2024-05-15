@@ -25,8 +25,6 @@ router.get('/', function (req, res, next) {
   if (req.session.delete) { perms.push(" Delete") };
 
   res.render('dashboard', { username: req.session.username, admin: req.session.admin, perms });
-
-
 });
 
 router.get('/sign-out', function (req, res, next) {

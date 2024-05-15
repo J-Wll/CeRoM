@@ -8,6 +8,9 @@ block content
   p You are logged in as: #{username}
   p You have the following permissions: [#{perms} ]
 
+  if message
+    p= message.message
+
   if admin
     br
     hr

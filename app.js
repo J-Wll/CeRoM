@@ -53,12 +53,14 @@ const productRouter = require('./routes/products');
 const customerRouter = require('./routes/customers');
 const employeeRouter = require('./routes/employees');
 const loginRouter = require('./routes/login');
+const changePasswordRouter = require('./routes/changePassword');
 
 app.use('/', indexRouter);
 app.use('/products', productRouter);
 app.use('/customers', customerRouter);
 app.use('/employees', employeeRouter);
 app.use('/login', loginRouter);
+app.use('/change-password', changePasswordRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

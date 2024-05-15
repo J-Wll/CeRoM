@@ -57,11 +57,6 @@ async function authMiddleware(req, res, next) {
     req.session.admin = user.permissions.admin || false;
     req.session.rootAdmin = user.permissions.rootAdmin || false;
 
-
-    req.session.flash = {
-      type: "message",
-      message: `You have successfully logged in as ${inpUsername}`,
-    };
     next();
   });
 }

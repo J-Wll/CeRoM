@@ -6,6 +6,9 @@ block content
     h1 #{title}
     include includes/dataTable.pug 
 
+    if message
+        p= message.message
+
     if admin === true &&  title === "Employees"
         br
         hr  

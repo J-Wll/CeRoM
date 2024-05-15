@@ -1,16 +1,16 @@
 body {
-  padding: 3em;
-  padding-top: 2em;
+  padding: 3rem;
+  padding-top: 2rem;
   padding-bottom: 0em;
-  font: 1rem "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 1.05rem "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 button {
-  font: 1rem "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 1.05rem "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 input {
-  font: 1rem "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 1.05rem "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -23,7 +23,7 @@ a#delete {
 
 header {
   max-width: 2000px;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: bold;
   overflow-wrap: anywhere;
 
@@ -59,4 +59,14 @@ header a {
 
 .move-right {
   margin-left: auto;
+}
+
+.big-form * {
+  display: inline-block;
+  margin: 5px 5px 5px 0;
+  font-size: 1.25rem;
+}
+
+.big-form input {
+  width: 350px
 }

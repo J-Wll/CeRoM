@@ -20,8 +20,6 @@ router.get("/", function (req, res) {
 
 // Runs login auth before the rest of the body
 router.post("/submit", loginAuth, function (req, res, next) {
-    console.log("done");
-    console.log(req.session);
     if (req.session.isAuthenticated) {
         return res.redirect("/");
     }
