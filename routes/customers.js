@@ -23,7 +23,8 @@ router.get("/:id", check.login, check.read, async (req, res) => {
         title: "Customer:",
         nameField: "name",
         noEdit: ["_id", "__v"],
-        editPath: `${BASEPATH}/edit`
+        editPath: `${BASEPATH}/edit`,
+        editInclude: "Customers"
     }
     singleItemRender(req, res, MODELNAME, req.params.id, args);
 })
@@ -33,9 +34,9 @@ router.post("/update/:id", check.login, check.update, async (req, res) => {
     res.redirect(`${BASEPATH}/:${req.params.id}`);
 })
 
-router.post("/delete/:id", check.login, check.del, async (req, res) => {
+router.get("/delete/:id", check.login, check.del, async (req, res) => {
     crudController.del(req, res, MODELNAME);
-    res.redirect(`${BASEPATH}/${req.params.id}`);
+    res.redirect(BASEPATH);
 })
 
 router.post('/create', check.login, check.create, async (req, res) => {

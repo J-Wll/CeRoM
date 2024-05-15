@@ -18,8 +18,10 @@ script.
             update: document.getElementById("update").checked,
             delete: document.getElementById("delete").checked,
             viewSensitive: document.getElementById("viewSensitive").checked,
-            admin: document.getElementById("admin").checked
         };
+        if ("#{rootAdmin}"){
+            permissions.admin = document.getElementById("admin").checked
+        }
         const form = document.getElementById("userForm");
         form.elements['permissions'].value = JSON.stringify(permissions);
         form.submit();
@@ -33,8 +35,9 @@ button(id="toggleButton" onclick="toggleContent()") Show employee registration f
 form(id="userForm" style="display: none;" action="/employees/create" method="post")
     p Either have the employee type their desired password here or give and send them a secure password then instruct them to login and change their password ASAP.
     input(placeholder="Full name" id="name" name="name" aria-label="Input for employee's full name")
-    input(placeholder="Unique username" id="username" name="username" aria-label="Input for employee's unique username")
-    input(placeholder="Password" id="password" name="password" aria-label="Input for employee's password")
+    input(placeholder="Unique username" id="username" name="username" aria-label="Input for employee's unique username" autocomplete="off")
+    input(type="password" placeholder="Password" id="password" name="password" aria-label="Input for employee's password" autocomplete="new-password")
+
     p Permissions:
     input(type="hidden" name="permissions")
     div
