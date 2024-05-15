@@ -39,16 +39,18 @@ router.post("/submit", check.login, async function (req, res, next) {
 
     })
 
-    req.body.password = await hashPassword(req.body.newPassword);
+    const newPass = await hashPassword(req.body.newPassword);
+    req.body = {}
+    req.body.password = newPass;
 
-    crudController.update(req, res, "employee", req.session.userID)
+    crudController.updateRaw(req, res, "employee", req.session.userID)
 
     req.session.flash = {
         type: "message",
         message: "Password changed",
     };
 
-    res.redirect("/change-password")
+    return res.redirect("/change-password")
 
 });
 

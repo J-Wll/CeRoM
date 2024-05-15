@@ -1,13 +1,24 @@
 const mongoose = require('mongoose');
 
+// raw ones do not have extra validation because used for login, pass changing etc. (a user without update perm should be able to change their own pass)
 async function getRaw(req, res, model) {
-    // no validation because this is used for the login, before authentication exists
     try {
         const Model = require("../models/" + model);
         return await Model.find(null, null).lean();
     } catch (error) {
         console.error(error.message);
     }
+}
+
+async function updateRaw(req, res, model, id) {
+    try {
+        console.log(req.body);
+        const Model = require("../models/" + model);
+        await Model.findByIdAndUpdate(id, req.body);
+    } catch (error) {
+        console.error(error.message);
+    }
+
 }
 
 async function getAll(req, res, model, limit = undefined, sortBy = "_id", sortDir = 1) {
@@ -93,6 +104,7 @@ async function del(req, res, model) {
 
 const crudController = {
     getRaw,
+    updateRaw,
     getAll,
     getOne,
     update,
