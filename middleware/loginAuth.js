@@ -7,19 +7,11 @@
 // ]
 
 const crudController = require("../controllers/crudController");
-
+const flashError = require("../js/flashError");
 const bcrypt = require("bcrypt");
 
-async function authMiddleware(req, res, next) {
-  function flashError(msg) {
-    req.session.flash = {
-      type: "error",
-      message: msg,
-    };
-    return res.redirect("/login");
-  }
-
-  const userData = await crudController.getAll(req, res, "employee", { login: true });
+async function loginAuth(req, res, next) {
+  const userData = await crudController.getRaw(req, res, "employee");
 
   const inpUsername = req.body.username;
   const inpPassword = req.body.password;
@@ -32,7 +24,7 @@ async function authMiddleware(req, res, next) {
   // guard clause if user not found
   if (!user) {
     console.log("test1")
-    return flashError("Invalid username or password");
+    return flashError(req, res, "Invalid username or password", "/login");
   }
 
   bcrypt.compare(inpPassword, user.password, function (err, result) {
@@ -41,7 +33,7 @@ async function authMiddleware(req, res, next) {
 
     // If it doesn't match, redirect and send msg
     if (!userPassMatch) {
-      return flashError("Invalid username or password");
+      return flashError(req, res, "Invalid username or password", "/login");
     }
 
     req.session.isAuthenticated = true;
@@ -49,6 +41,7 @@ async function authMiddleware(req, res, next) {
 
     console.log(user);
 
+    req.session.userID = user._id.valueOf();
     req.session.create = user.permissions.create || false;
     req.session.read = user.permissions.read || false;
     req.session.update = user.permissions.update || false;
@@ -61,4 +54,4 @@ async function authMiddleware(req, res, next) {
   });
 }
 
-module.exports = authMiddleware;
+module.exports = loginAuth;

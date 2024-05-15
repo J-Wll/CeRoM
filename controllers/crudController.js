@@ -1,10 +1,20 @@
 const mongoose = require('mongoose');
 
-async function getAll(req, res, model, limit = undefined, sortBy = "_id", sortDir = 1, login = false) {
-    // if (!login && (!req.session.read || !req.session.isAuthenticated)) {
-    //     res.json({ message: "Not signed in or invalid permissions" });
-    //     return;
-    // }
+async function getRaw(req, res, model) {
+    // no validation because this is used for the login, before authentication exists
+    try {
+        const Model = require("../models/" + model);
+        return await Model.find(null, null).lean();
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+async function getAll(req, res, model, limit = undefined, sortBy = "_id", sortDir = 1) {
+    if (!req.session.read || !req.session.isAuthenticated) {
+        res.json({ message: "Not signed in or invalid permissions" });
+        return;
+    }
 
     try {
         const Model = require("../models/" + model);
@@ -31,15 +41,16 @@ async function getOne(req, res, model, id) {
     }
 }
 
-async function update(req, res, model) {
+async function update(req, res, model, id) {
     if (!req.session.update || !req.session.isAuthenticated) {
         res.json({ message: "Not signed in or invalid permissions" });
         return;
     }
 
     try {
+        console.log(req.body);
         const Model = require("../models/" + model);
-        await Model.findByIdAndUpdate(req.params.id, req.body);
+        await Model.findByIdAndUpdate(id, req.body);
     } catch (error) {
         console.error(error.message);
     }
@@ -81,6 +92,7 @@ async function del(req, res, model) {
 }
 
 const crudController = {
+    getRaw,
     getAll,
     getOne,
     update,

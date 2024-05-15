@@ -68,7 +68,7 @@ router.post('/create', check.login, check.admin, check.create, bodyParser.json()
 
     req.body.permissions = JSON.parse(req.body.permissions);
     // admins implicitly get all permissions (other than root admin)
-    if (req.body.admin || req.body.rootAdmin) {
+    if (req.body.permissions.admin || req.body.permissions.rootAdmin) {
         if (!req.session.rootAdmin) {
             req.session.flash = {
                 type: "error",
@@ -76,11 +76,11 @@ router.post('/create', check.login, check.admin, check.create, bodyParser.json()
             };
             return res.redirect(req.get("referer"));
         }
-        req.body.read = true;
-        req.body.create = true;
-        req.body.update = true;
-        req.body.delete = true;
-        req.body.viewSensitive = true;
+        req.body.permissions.read = true;
+        req.body.permissions.create = true;
+        req.body.permissions.update = true;
+        req.body.permissions.delete = true;
+        req.body.permissions.viewSensitive = true;
     }
 
     const hashedPassword = await hashPassword(req.body.password);

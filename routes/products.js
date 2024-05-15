@@ -30,7 +30,7 @@ router.get("/:id", check.login, check.read, async (req, res) => {
 })
 
 router.post("/update/:id", check.login, check.update, async (req, res) => {
-    crudController.update(req, res, MODELNAME);
+    crudController.update(req, res, MODELNAME, req.params.id);
     res.redirect(`${BASEPATH}/${req.params.id}`)
 })
 
