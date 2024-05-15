@@ -1,0 +1,16 @@
+form(action=`/products/update/${data._id}` method="post")
+    label(for="name") Name:
+    input(type="text" id="name" name="name", value=data.name)
+    br
+    label(for="stock") Stock:
+    input(type="number" id="stock" name="stock", value=data.stock)
+    br
+    label(for="price") Price:
+    input(type="number" id="price" name="price", value=data.price)
+    br
+    label(for="sales") Sales:
+    input(type="number" id="sales" name="sales", value=data.sales)
+    br
+    button(type="submit") Update Product
+br
+a(href=`/products/delete/${data._id}` id="delete") Delete product, this cannot be undone

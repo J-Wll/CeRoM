@@ -5,14 +5,17 @@ const check = require("../middleware/check");
 const itemsRender = require("../js/itemsRender");
 const singleItemRender = require("../js/singleItemRender");
 
+const BASEPATH = "/products";
+const MODELNAME = "product";
+
 router.get("/", check.login, check.read, async (req, res) => {
     const args = {
         title: "Products",
         noEdit: ["_id", "__v"],
-        basePath: "/products",
+        basePath: BASEPATH,
         description: "Products"
     }
-    itemsRender(req, res, "product", args);
+    itemsRender(req, res, MODELNAME, args);
 })
 
 router.get("/:id", check.login, check.read, async (req, res) => {
@@ -20,14 +23,24 @@ router.get("/:id", check.login, check.read, async (req, res) => {
         title: "Product:",
         nameField: "name",
         noEdit: ["_id", "__v"],
-        editPath: "/products/edit",
+        editPath: `${BASEPATH}/edit`,
         editInclude: "Products"
     }
-    singleItemRender(req, res, "product", req.params.id, args);
+    singleItemRender(req, res, MODELNAME, req.params.id, args);
+})
+
+router.post("/update/:id", check.login, check.update, async (req, res) => {
+    crudController.update(req, res, MODELNAME);
+    res.redirect(`${BASEPATH}/${req.params.id}`)
+})
+
+router.get("/delete/:id", check.login, check.del, async (req, res) => {
+    crudController.del(req, res, MODELNAME);
+    res.redirect(BASEPATH);
 })
 
 router.post('/create', check.login, check.create, async (req, res) => {
-    await crudController.create(req, res, this, "product", "/products");
+    await crudController.create(req, res, this, MODELNAME, BASEPATH);
 });
 
 module.exports = router;

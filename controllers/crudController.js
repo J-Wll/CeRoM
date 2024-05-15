@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 
-async function getAll(req, res, model, limit = undefined, sortBy = "_id", sortDir = 1) {
-    // if (!req.session.read || !req.session.isAuthenticated) {
-
+async function getAll(req, res, model, limit = undefined, sortBy = "_id", sortDir = 1, login = false) {
+    // if (!login && (!req.session.read || !req.session.isAuthenticated)) {
+    //     res.json({ message: "Not signed in or invalid permissions" });
+    //     return;
     // }
-    const modelName = model;
+
     try {
-        const Model = require("../models/" + modelName);
+        const Model = require("../models/" + model);
         // collation is for sorting case insensitive, lean is to remove non-needed fields (was causing an issue on the table)
         const items = await Model.find(null, null, { limit: limit, sort: { [sortBy]: sortDir }, collation: { locale: 'en' } }).lean();
         return items;
@@ -16,12 +17,13 @@ async function getAll(req, res, model, limit = undefined, sortBy = "_id", sortDi
 }
 
 async function getOne(req, res, model, id) {
-    // if (!req.session.read || !req.session.isAuthenticated) {
+    if (!req.session.read || !req.session.isAuthenticated) {
+        res.json({ message: "Not signed in or invalid permissions" });
+        return;
+    }
 
-    // }
-    const modelName = model;
     try {
-        const Model = require("../models/" + modelName);
+        const Model = require("../models/" + model);
         const item = await Model.findById(id).lean();
         return item;
     } catch (error) {
@@ -29,13 +31,27 @@ async function getOne(req, res, model, id) {
     }
 }
 
+async function update(req, res, model) {
+    if (!req.session.update || !req.session.isAuthenticated) {
+        res.json({ message: "Not signed in or invalid permissions" });
+        return;
+    }
+
+    try {
+        const Model = require("../models/" + model);
+        await Model.findByIdAndUpdate(req.params.id, req.body);
+    } catch (error) {
+        console.error(error.message);
+    }
+
+}
+
 async function create(req, res, next, modelName, returnTo = undefined) {
-    // Add crud perm check and admin check for employees
-    // if (!req.session.create || !req.session.isAuthenticated) {
-    //     res.json({ message: "Not signed in or invalid permissions" });
-    //     return;
-    // }
-    // const modelName = req.params.model;
+    if (!req.session.create || !req.session.isAuthenticated) {
+        res.json({ message: "Not signed in or invalid permissions" });
+        return;
+    }
+
     try {
         const Model = require("../models/" + modelName);
         const newItem = await new Model(req.body);
@@ -50,10 +66,26 @@ async function create(req, res, next, modelName, returnTo = undefined) {
     }
 }
 
+async function del(req, res, model) {
+    if (!req.session.delete || !req.session.isAuthenticated) {
+        res.json({ message: "Not signed in or invalid permissions" });
+        return;
+    }
+
+    try {
+        const Model = require("../models/" + model);
+        await Model.findByIdAndDelete(req.params.id);
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
 const crudController = {
     getAll,
     getOne,
-    create
+    update,
+    create,
+    del
 };
 
 module.exports = crudController;

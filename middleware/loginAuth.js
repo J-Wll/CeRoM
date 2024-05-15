@@ -19,7 +19,7 @@ async function authMiddleware(req, res, next) {
     return res.redirect("/login");
   }
 
-  const userData = await crudController.getAll(req, res, "employee");
+  const userData = await crudController.getAll(req, res, "employee", { login: true });
 
   const inpUsername = req.body.username;
   const inpPassword = req.body.password;
@@ -32,17 +32,16 @@ async function authMiddleware(req, res, next) {
   // guard clause if user not found
   if (!user) {
     console.log("test1")
-    flashError("Invalid username or password");
+    return flashError("Invalid username or password");
   }
 
-  console.log(inpPassword, user.password);
   bcrypt.compare(inpPassword, user.password, function (err, result) {
     console.log(err, result);
     userPassMatch = result === true;
 
     // If it doesn't match, redirect and send msg
     if (!userPassMatch) {
-      flashError("Invalid username or password");
+      return flashError("Invalid username or password");
     }
 
     req.session.isAuthenticated = true;

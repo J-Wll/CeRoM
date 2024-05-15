@@ -17,6 +17,10 @@ a {
   color: #00638a;
 }
 
+a#delete {
+  color: rgb(109, 0, 0);
+}
+
 header {
   max-width: 2000px;
   font-size: 1.1rem;

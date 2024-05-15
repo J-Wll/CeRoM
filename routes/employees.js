@@ -7,17 +7,20 @@ const singleItemRender = require("../js/singleItemRender");
 const hashPassword = require('../js/hashPassword');
 const bodyParser = require('body-parser');
 
+const BASEPATH = "/employees";
+const MODELNAME = "employee";
+
 router.get("/", check.login, check.admin, check.read, async (req, res) => {
     const args = {
         title: "Employees",
         noEdit: ["_id", "__v", "encrypted_pass"],
-        basePath: "/employees",
+        basePath: BASEPATH,
         admin: req.session.admin,
         notEditable: true,
         description: "Employees must be added via the registration form by an admin. Permissions can be viewed and changed by clicking view/edit. Only the permissions, name and contact details can be changed. Passwords should be changed by the users and their username is fixed as it is linked to products and logs.",
         rootAdmin: req.session.rootAdmin
     }
-    itemsRender(req, res, "employee", args);
+    itemsRender(req, res, MODELNAME, args);
 })
 
 router.get("/:id", check.login, check.admin, check.read, async (req, res) => {
@@ -25,9 +28,19 @@ router.get("/:id", check.login, check.admin, check.read, async (req, res) => {
         title: "Employee:",
         nameField: "username",
         noEdit: ["_id", "__v"],
-        editPath: "/employees/edit"
+        editPath: `${BASEPATH}/edit`
     }
-    singleItemRender(req, res, "employee", req.params.id, args);
+    singleItemRender(req, res, MODELNAME, req.params.id, args);
+})
+
+router.post("/update/:id", check.login, check.admin, check.update, async (req, res) => {
+    crudController.update(req, res, MODELNAME, req.params.id);
+    res.redirect(`${BASEPATH}/:${req.params.id}`);
+})
+
+router.post("/delete/:id", check.login, check.admin, check.del, async (req, res) => {
+    crudController.del(req, res, MODELNAME);
+    res.redirect(`${BASEPATH}/${req.params.id}`);
 })
 
 router.post('/create', check.login, check.admin, check.create, bodyParser.json(), async (req, res) => {
@@ -40,7 +53,7 @@ router.post('/create', check.login, check.admin, check.create, bodyParser.json()
     }
 
     const username = req.body.username;
-    const existingEmployees = await crudController.getAll(req, res, "employee",);
+    const existingEmployees = await crudController.getAll(req, res, MODELNAME,);
 
     for (i in existingEmployees) {
         if (existingEmployees[i].username.toLowerCase() == username.toLowerCase()) {
@@ -72,7 +85,7 @@ router.post('/create', check.login, check.admin, check.create, bodyParser.json()
     const hashedPassword = await hashPassword(req.body.password);
     req.body.password = hashedPassword;
     console.log(req.body);
-    await crudController.create(req, res, this, "employee", "/employees");
+    await crudController.create(req, res, this, MODELNAME, BASEPATH);
 });
 
 module.exports = router;
