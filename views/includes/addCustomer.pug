@@ -1,0 +1,35 @@
+
+h2 Add customer
+form(method="POST" action="/customers/create" class="regular-form")
+    label(for="name" class="required") Name:
+    input(type="text" id="name" name="name", required)
+
+    label(for="status" class="required") Status:
+        select(id="status" name="status", required)
+            option(value="initial_contact") Initial Contact
+            option(value="sales") Sales
+            option(value="support") Support
+            option(value="referrals") Referrals
+            option(value="inactive") Inactive
+
+    label(for="email") Email:
+    input(type="email" id="email" name="email")
+
+    br
+
+    label(for="phone") Phone:
+    input(type="tel" id="phone" name="phone")
+
+    label(for="handled_by" class="required") Handled By:
+    select(id="handled_by" name="handled_by", required)
+        each employee in employees
+            option(value=employee._id)= employee.username
+
+    label(for="interestedIn" class="required") Interested In:
+    select(id="interestedIn" name="interested_in", multiple, required)
+        each product in products
+            option(value=product._id)= product.name
+
+    br
+
+    button Create customer

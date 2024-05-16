@@ -28,7 +28,8 @@ async function itemsRender(req, res, model, args) {
         sortedBy: sortBy,
         sortedDir: sortDir,
         limited: limit,
-        admin: req.session.admin
+        admin: req.session.admin,
+        create: req.session.create
     })
 
 }

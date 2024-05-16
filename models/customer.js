@@ -10,9 +10,10 @@ const Customer = new mongoose.Schema({
         {
             employee_id: mongoose.Schema.Types.ObjectId,
             employee_username: String
-        }, required: true
+        },
+        required: true
     },
-    interestedIn: [{
+    interested_in: [{
         product_id: mongoose.Schema.Types.ObjectId,
         product_name: String
     }],
