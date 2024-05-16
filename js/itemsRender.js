@@ -1,6 +1,6 @@
 const crudController = require('../controllers/crudController');
 
-async function itemsRender(req, res, model, args) {
+async function itemsRender(req, res, model, args, formatData = undefined) {
     if (req.session.flash) {
         res.locals.message = req.session.flash;
         delete req.session.flash;
@@ -20,6 +20,9 @@ async function itemsRender(req, res, model, args) {
         fields.forEach((f) => {
             items[0][f] = "empty";
         })
+    } else if (formatData) {
+        console.log(formatData, items);
+        items = formatData(items);
     }
 
     res.render("items", {

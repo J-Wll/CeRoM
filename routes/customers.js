@@ -8,6 +8,30 @@ const singleItemRender = require("../js/singleItemRender");
 const BASEPATH = "/customers";
 const MODELNAME = "customer";
 
+function formatData(data) {
+    function formatInner(item) {
+        for (header in item) {
+            if (header === "handled_by") {
+                item[header] = item[header].employee_username;
+            }
+        }
+        return item;
+    }
+
+    console.log("start: ", data);
+
+    if (Array.isArray(data)) {
+        for (item of data) {
+            item = formatInner(item);
+        }
+    } else {
+        data = formatInner(data);
+    }
+
+    console.log("end: ", data);
+    return data;
+}
+
 router.get("/", check.login, check.read, async (req, res) => {
     const products = await crudController.getRaw(req, res, "product", "name")
     const employees = await crudController.getRaw(req, res, "employee", "username")
@@ -19,7 +43,7 @@ router.get("/", check.login, check.read, async (req, res) => {
         products: products,
         employees: employees
     }
-    itemsRender(req, res, MODELNAME, args);
+    itemsRender(req, res, MODELNAME, args, formatData);
 })
 
 router.get("/:id", check.login, check.read, async (req, res) => {
@@ -30,7 +54,7 @@ router.get("/:id", check.login, check.read, async (req, res) => {
         editPath: `${BASEPATH}/edit`,
         editInclude: "Customers"
     }
-    singleItemRender(req, res, MODELNAME, req.params.id, args);
+    singleItemRender(req, res, MODELNAME, req.params.id, args, formatData);
 })
 
 router.post("/update/:id", check.login, check.update, async (req, res) => {
