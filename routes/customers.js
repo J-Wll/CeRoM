@@ -14,6 +14,16 @@ function formatData(data) {
             if (header === "handled_by") {
                 item[header] = item[header].employee_username;
             }
+            if (header === "interested_in") {
+                for (i in item[header]) {
+                    item[header][i] = item[header][i].product_name;
+                }
+            }
+            if (header === "customer-logs") {
+                // Keep the full ones for the other view
+                item["full-customer-logs"] = item[header];
+                item[header] = `${item[header].length} entries`
+            }
         }
         return item;
     }
@@ -29,6 +39,7 @@ function formatData(data) {
     }
 
     console.log("end: ", data);
+
     return data;
 }
 

@@ -10,6 +10,40 @@ const bodyParser = require('body-parser');
 const BASEPATH = "/employees";
 const MODELNAME = "employee";
 
+function formatData(data) {
+    function formatInner(item) {
+        for (header in item) {
+            if (header === "permissions") {
+                console.log("IANFJUSIOUNFIOUNFS")
+                let perms = []
+                if (item[header].rootAdmin) { perms.push(" Root Admin") };
+                if (item[header].admin) { perms.push(" Admin") };
+                if (item[header].create) { perms.push(" Create") };
+                if (item[header].read) { perms.push(" Read") };
+                if (item[header].update) { perms.push(" Update") };
+                if (item[header].delete) { perms.push(" Delete") };
+                item[header] = perms;
+            }
+        }
+        return item;
+    }
+
+    console.log("start: ", data);
+
+    if (Array.isArray(data)) {
+        for (item of data) {
+            item = formatInner(item);
+        }
+    } else {
+        data = formatInner(data);
+    }
+
+    console.log("end: ", data);
+
+    return data;
+}
+
+
 router.get("/", check.login, check.admin, check.read, async (req, res) => {
     const args = {
         title: "Employees",
@@ -20,7 +54,7 @@ router.get("/", check.login, check.admin, check.read, async (req, res) => {
         description: "Employees must be added via the registration form by an admin. Permissions can be viewed and changed by clicking view/edit. Only the permissions, name and contact details can be changed. Passwords should be changed by the users and their username is fixed as it is linked to products and logs.",
         rootAdmin: req.session.rootAdmin
     }
-    itemsRender(req, res, MODELNAME, args);
+    itemsRender(req, res, MODELNAME, args, formatData);
 })
 
 router.get("/:id", check.login, check.admin, check.read, async (req, res) => {
@@ -30,7 +64,7 @@ router.get("/:id", check.login, check.admin, check.read, async (req, res) => {
         editPath: `${BASEPATH}/edit`,
         editInclude: "Employees"
     }
-    singleItemRender(req, res, MODELNAME, req.params.id, args);
+    singleItemRender(req, res, MODELNAME, req.params.id, args, formatData);
 })
 
 router.post("/update/:id", check.login, check.admin, check.update, async (req, res) => {

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const permsArr = require("../js/permsArr");
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -16,13 +17,7 @@ router.get('/', function (req, res, next) {
     delete req.session.flash;
   }
 
-  let perms = [];
-  if (req.session.rootAdmin) { perms.push(" Root Admin") };
-  if (req.session.admin) { perms.push(" Admin") };
-  if (req.session.create) { perms.push(" Create") };
-  if (req.session.read) { perms.push(" Read") };
-  if (req.session.update) { perms.push(" Update") };
-  if (req.session.delete) { perms.push(" Delete") };
+  const perms = permsArr(req);
 
   res.render('dashboard', { username: req.session.username, admin: req.session.admin, perms });
 });
