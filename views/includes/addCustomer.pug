@@ -24,7 +24,7 @@ form(method="POST" action="/customers/create" class="regular-form")
     select(id="handled_by" name="handled_by", required)
         each employee in employees
             option(value=employee._id)= employee.username
-
+    br
     label(for="interestedIn" class="required") Interested In:
     select(id="interestedIn" name="interested_in", multiple, required)
         each product in products

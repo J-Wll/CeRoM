@@ -14,7 +14,6 @@ function formatData(data) {
     function formatInner(item) {
         for (header in item) {
             if (header === "permissions") {
-                console.log("IANFJUSIOUNFIOUNFS")
                 let perms = []
                 if (item[header].rootAdmin) { perms.push(" Root Admin") };
                 if (item[header].admin) { perms.push(" Admin") };

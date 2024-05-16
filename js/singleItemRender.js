@@ -7,9 +7,14 @@ async function singleItemRender(req, res, model, id, args, formatData = undefine
     }
 
     let item = await crudController.getOne(req, res, model, id);
+    let extras = undefined;
 
     if (formatData) {
         item = formatData(item);
+        if (item.extras) {
+            extras = item.extras;
+            delete item.extras;
+        }
     }
 
     console.log(item);
@@ -17,6 +22,7 @@ async function singleItemRender(req, res, model, id, args, formatData = undefine
     res.render("singleItem", {
         ...args,
         data: item,
+        extras: extras,
         admin: req.session.admin
     })
 

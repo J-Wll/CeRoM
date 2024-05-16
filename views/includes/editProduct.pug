@@ -6,7 +6,7 @@ form(action=`/products/update/${data._id}` method="post")
     input(type="number" id="stock" name="stock", value=data.stock)
     br
     label(for="price") Price:
-    input(type="number" id="price" name="price", value=data.price)
+    input(type="number" id="price" name="price", value=extras.price)
     br
     label(for="sales") Sales:
     input(type="number" id="sales" name="sales", value=data.sales)

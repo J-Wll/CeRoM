@@ -9,6 +9,7 @@ async function itemsRender(req, res, model, args, formatData = undefined) {
     const sortBy = req.query.sortBy || "_id";
     const sortDir = parseInt(req.query.sortDir) || 1;
     const limit = req.query.limit || 10;
+    let extras = undefined;
 
     let items = await crudController.getAll(req, res, model, limit, sortBy, sortDir);
 
@@ -21,13 +22,14 @@ async function itemsRender(req, res, model, args, formatData = undefined) {
             items[0][f] = "empty";
         })
     } else if (formatData) {
-        console.log(formatData, items);
-        items = formatData(items);
+        items = formatData(items, false);
+
     }
 
     res.render("items", {
         ...args,
         data: items,
+        extras: extras,
         sortedBy: sortBy,
         sortedDir: sortDir,
         limited: limit,

@@ -19,6 +19,7 @@ const Customer = new mongoose.Schema({
     }],
     customer_logs: [{
         contact_type: String,
+        contact_datetime: String,
         contact_medium: String,
         contact_description: String
     }]

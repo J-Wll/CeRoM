@@ -8,10 +8,13 @@ const singleItemRender = require("../js/singleItemRender");
 const BASEPATH = "/products";
 const MODELNAME = "product";
 
-function formatData(data) {
+function formatData(data, doExtras = true) {
     function formatInner(item) {
         for (header in item) {
             if (header === "price") {
+                if (doExtras) {
+                    item.extras = { price: item[header] }
+                }
                 item[header] = `£${item[header]}`
             }
         }
@@ -45,7 +48,6 @@ router.get("/:id", check.login, check.read, async (req, res) => {
     const args = {
         title: "Product:",
         nameField: "name",
-        noEdit: ["_id", "__v"],
         editPath: `${BASEPATH} /edit`,
         editInclude: "Products"
     }
