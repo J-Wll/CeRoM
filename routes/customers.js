@@ -14,7 +14,6 @@ router.get("/", check.login, check.read, async (req, res) => {
     console.log(products, employees)
     const args = {
         title: "Customers",
-        noEdit: ["_id", "__v", "Customer logs"],
         basePath: BASEPATH,
         description: "To view and edit customer logs, click view/edit on the customer",
         products: products,

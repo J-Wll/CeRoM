@@ -11,7 +11,6 @@ const MODELNAME = "product";
 router.get("/", check.login, check.read, async (req, res) => {
     const args = {
         title: "Products",
-        noEdit: ["_id", "__v"],
         basePath: BASEPATH,
         description: "Products"
     }

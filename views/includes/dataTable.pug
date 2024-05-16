@@ -61,15 +61,6 @@ block content
                         td #{column}
                     td 
                         a(href=`${basePath}/${row._id}`) View/Edit 
-            unless notEditable
-                tr
-                    form(action=`${basePath}/create` method="post")
-                        each column in Object.keys(data[0])
-                            td 
-                                if !noEdit.includes(column)
-                                    input(placeholder=column name=column id=column)
-                        td
-                            button Add
 
     if description 
         p=description

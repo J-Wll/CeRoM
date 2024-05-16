@@ -27,7 +27,6 @@ router.get("/:id", check.login, check.admin, check.read, async (req, res) => {
     const args = {
         title: "Employee:",
         nameField: "username",
-        noEdit: ["_id", "__v"],
         editPath: `${BASEPATH}/edit`,
         editInclude: "Employees"
     }
