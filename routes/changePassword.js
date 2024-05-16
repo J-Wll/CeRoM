@@ -11,14 +11,12 @@ router.get("/", check.login, function (req, res) {
         res.locals.message = req.session.flash;
         delete req.session.flash;
     }
-    res.render("changePassword");
+    res.render("changePassword", { admin: req.session.admin });
 });
 
 // Runs login auth before the rest of the body
 router.post("/submit", check.login, async function (req, res, next) {
-    console.log(req.body);
-    console.log(req.session.id)
-    const userData = await crudController.getOne(req, res, "employee", req.session.userID);
+    const userData = await crudController.getOneRaw(req, res, "employee", req.session.userID, "password");
     const pass = userData.password;
     let userPassMatch = false;
 
