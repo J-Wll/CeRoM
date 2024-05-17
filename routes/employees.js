@@ -76,6 +76,10 @@ router.get("/delete/:id", check.login, check.admin, check.del, async (req, res) 
     res.redirect(BASEPATH);
 })
 
+router.post("/firstCreate", async (req, res) => {
+    // This only works if employees.length is 0, that's how it is protected
+})
+
 router.post('/create', check.login, check.admin, check.create, bodyParser.json(), async (req, res) => {
     if (req.body.password.length < 8) {
         req.session.flash = {

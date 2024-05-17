@@ -1,8 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const loginAuth = require("../middleware/loginAuth");
+const crudController = require("../controllers/crudController");
+const itemsRender = require("../js/itemsRender");
 
-router.get("/", function (req, res) {
+router.get("/", async function (req, res) {
+    const employees = await crudController.getRaw(req, res, "employee", "username");
+
+    if (employees.length === 0) {
+        return res.render("rootAdmin", { firstUser: true })
+    }
+
     if (req.session.isAuthenticated) {
         req.session.flash = {
             type: "error",

@@ -1,66 +1,75 @@
-script.
-    function toggleContent() {
-        const content = document.getElementById("userForm");
-        const toggleButton = document.getElementById("toggleButton");
-        if (content.style.display === "none") {
-            content.style.display = "block";
-            toggleButton.innerText = "Hide employee registration form"
-        } else {
-            content.style.display = "none";
-            toggleButton.innerText = "Show employee registration form"
+p #{firstUser}
+if firstUser
+    form(id="userForm" action="/employees/firstCreate" method="post")
+        input(placeholder="Full name" id="name" name="name" aria-label="Input for employee's full name")
+        input(placeholder="Unique username" id="username" name="username" aria-label="Input for employee's unique username" autocomplete="off")
+        input(type="password" placeholder="Password" id="password" name="password" aria-label="Input for employee's password" autocomplete="new-password")
+        button Register
+
+unless firstUser 
+    script.
+        function toggleContent() {
+            const content = document.getElementById("userForm");
+            const toggleButton = document.getElementById("toggleButton");
+            if (content.style.display === "none") {
+                content.style.display = "block";
+                toggleButton.innerText = "Hide employee registration form"
+            } else {
+                content.style.display = "none";
+                toggleButton.innerText = "Show employee registration form"
+            }
         }
-    }
 
-    function submitForm() {
-        const permissions = {
-            create: document.getElementById("create").checked,
-            read: document.getElementById("read").checked,
-            update: document.getElementById("update").checked,
-            delete: document.getElementById("delete").checked,
-            viewSensitive: document.getElementById("viewSensitive").checked,
-        };
-        if ("#{rootAdmin}"){
-            permissions.admin = document.getElementById("admin").checked
+        function submitForm() {
+            const permissions = {
+                create: document.getElementById("create").checked,
+                read: document.getElementById("read").checked,
+                update: document.getElementById("update").checked,
+                delete: document.getElementById("delete").checked,
+                viewSensitive: document.getElementById("viewSensitive").checked,
+            };
+            if ("#{rootAdmin}"){
+                permissions.admin = document.getElementById("admin").checked
+            }
+            const form = document.getElementById("userForm");
+            form.elements['permissions'].value = JSON.stringify(permissions);
+            form.submit();
         }
-        const form = document.getElementById("userForm");
-        form.elements['permissions'].value = JSON.stringify(permissions);
-        form.submit();
-    }
 
 
-button(id="toggleButton" onclick="toggleContent()") Show employee registration form
+    button(id="toggleButton" onclick="toggleContent()") Show employee registration form
 
-form(id="userForm" style="display: none;" action="/employees/create" method="post")
-    p Either have the employee type their desired password here or give and send them a secure password then instruct them to login and change their password ASAP.
-    input(placeholder="Full name" id="name" name="name" aria-label="Input for employee's full name")
-    input(placeholder="Unique username" id="username" name="username" aria-label="Input for employee's unique username" autocomplete="off")
-    input(type="password" placeholder="Password" id="password" name="password" aria-label="Input for employee's password" autocomplete="new-password")
+    form(id="userForm" style="display: none;" action="/employees/create" method="post")
+        p Either have the employee type their desired password here or give and send them a secure password then instruct them to login and change their password ASAP.
+        input(placeholder="Full name" id="name" name="name" aria-label="Input for employee's full name")
+        input(placeholder="Unique username" id="username" name="username" aria-label="Input for employee's unique username" autocomplete="off")
+        input(type="password" placeholder="Password" id="password" name="password" aria-label="Input for employee's password" autocomplete="new-password")
 
-    p Permissions:
-    input(type="hidden" name="permissions")
-    div
-        label(for="create") Create:
-        input(type="checkbox" name="create" id="create" aria-label="Checkbox for create permission")
-    div
-        label(for="read") Read:
-        input(type="checkbox" name="read" id="read" aria-label="Checkbox for read permission")
-    div
-        label(for="update") Update:
-        input(type="checkbox" name="update" id="update" aria-label="Checkbox for update permission")
-    div
-        label(for="delete") Delete:
-        input(type="checkbox" name="delete" id="delete" aria-label="Checkbox for delete permission")
-    div
-        label(for="viewSensitive") View sensitive customer information (Email, Phone, Address):
-        input(type="checkbox" name="viewSensitive" id="viewSensitive" aria-label="Checkbox for permission to view sensitive customer information")
-    if rootAdmin
+        p Permissions:
+        input(type="hidden" name="permissions")
         div
-            //- only the root account can add new admins, admins get all permissions
-            label(for="admin") Admin (Can only be given if you are the root admin, gives all other permissions):
-            input(type="checkbox" name="admin" id="admin" aria-label="Checkbox for assigning admin")
-    else 
-        p Only the rootAdmin can grant admin status
-    br
-    button(type="button" onclick="submitForm()") Register
+            label(for="create") Create:
+            input(type="checkbox" name="create" id="create" aria-label="Checkbox for create permission")
+        div
+            label(for="read") Read:
+            input(type="checkbox" name="read" id="read" aria-label="Checkbox for read permission")
+        div
+            label(for="update") Update:
+            input(type="checkbox" name="update" id="update" aria-label="Checkbox for update permission")
+        div
+            label(for="delete") Delete:
+            input(type="checkbox" name="delete" id="delete" aria-label="Checkbox for delete permission")
+        div
+            label(for="viewSensitive") View sensitive customer information (Email, Phone, Address):
+            input(type="checkbox" name="viewSensitive" id="viewSensitive" aria-label="Checkbox for permission to view sensitive customer information")
+        if rootAdmin
+            div
+                //- only the root account can add new admins, admins get all permissions
+                label(for="admin") Admin (Can only be given if you are the root admin, gives all other permissions):
+                input(type="checkbox" name="admin" id="admin" aria-label="Checkbox for assigning admin")
+        else 
+            p Only the rootAdmin can grant admin status
+        br
+        button(type="button" onclick="submitForm()") Register
 
 
