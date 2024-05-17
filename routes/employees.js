@@ -78,6 +78,23 @@ router.get("/delete/:id", check.login, check.admin, check.del, async (req, res) 
 
 router.post("/firstCreate", async (req, res) => {
     // This only works if employees.length is 0, that's how it is protected
+    const employees = await crudController.getRaw(req, res, "employee", "username");
+    console.log(employees.length)
+    if (employees.length === 0) {
+        req.body.permissions = {
+            rootAdmin: true,
+            admin: true,
+            create: true,
+            read: true,
+            update: true,
+            delete: true,
+        }
+
+        req.body.password = await hashPassword(req.body.password);
+        console.log(req.body);
+        crudController.createRaw(req, res, "employee")
+        return res.redirect("/");
+    }
 })
 
 router.post('/create', check.login, check.admin, check.create, bodyParser.json(), async (req, res) => {

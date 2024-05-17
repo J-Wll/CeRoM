@@ -30,7 +30,16 @@ async function updateRaw(req, res, model, id) {
     } catch (error) {
         console.error(error.message);
     }
+}
 
+async function createRaw(req, res, model){
+    try {
+        const Model = require("../models/" + model);
+        const newItem = await new Model(req.body);
+        await newItem.save();
+    } catch (error){
+        console.error(error);
+    }
 }
 
 // the permissions checks are also done in the routes before crudController is called, these are redundancies
@@ -115,6 +124,7 @@ const crudController = {
     getRaw,
     getOneRaw,
     updateRaw,
+    createRaw,
     getAll,
     getOne,
     update,
