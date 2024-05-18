@@ -1,6 +1,6 @@
 const crudController = require('../controllers/crudController');
 
-async function itemsRender(req, res, model, args, formatData = undefined) {
+async function itemsRender(req, res, model, args, formatData = undefined, fields = undefined) {
     if (req.session.flash) {
         res.locals.message = req.session.flash;
         delete req.session.flash;
@@ -11,7 +11,7 @@ async function itemsRender(req, res, model, args, formatData = undefined) {
     const limit = req.query.limit || 10;
     let extras = undefined;
 
-    let items = await crudController.getAll(req, res, model, limit, sortBy, sortDir);
+    let items = await crudController.getAll(req, res, model, limit, sortBy, sortDir, fields);
 
     if (items.length < 1) {
         // This is for when there is no data in the model, a table populated with just the headers and the ability to add an entry

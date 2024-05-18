@@ -32,18 +32,18 @@ async function updateRaw(req, res, model, id) {
     }
 }
 
-async function createRaw(req, res, model){
+async function createRaw(req, res, model) {
     try {
         const Model = require("../models/" + model);
         const newItem = await new Model(req.body);
         await newItem.save();
-    } catch (error){
+    } catch (error) {
         console.error(error);
     }
 }
 
 // the permissions checks are also done in the routes before crudController is called, these are redundancies
-async function getAll(req, res, model, limit = undefined, sortBy = "_id", sortDir = 1) {
+async function getAll(req, res, model, limit = undefined, sortBy = "_id", sortDir = 1, fields = null) {
     if (!req.session.read || !req.session.isAuthenticated) {
         return flashError(req, res, "Not signed in or invalid permissions", "/");
     }
@@ -51,21 +51,21 @@ async function getAll(req, res, model, limit = undefined, sortBy = "_id", sortDi
     try {
         const Model = require("../models/" + model);
         // collation is for sorting case insensitive, lean is to remove non-needed fields (was causing an issue on the table)
-        const items = await Model.find(null, null, { limit: limit, sort: { [sortBy]: sortDir }, collation: { locale: 'en' } }).lean();
+        const items = await Model.find(null, fields, { limit: limit, sort: { [sortBy]: sortDir }, collation: { locale: 'en' } }).lean();
         return items;
     } catch (error) {
         console.error(error.message);
     }
 }
 
-async function getOne(req, res, model, id) {
+async function getOne(req, res, model, id, fields = null) {
     if (!req.session.read || !req.session.isAuthenticated) {
         return flashError(req, res, "Not signed in or invalid permissions", "/");
     }
 
     try {
         const Model = require("../models/" + model);
-        const item = await Model.findById(id).lean();
+        const item = await Model.findById(id, fields).lean();
         return item;
     } catch (error) {
         console.error(error.message);

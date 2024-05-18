@@ -53,7 +53,8 @@ router.get("/", check.login, check.admin, check.read, async (req, res) => {
         description: "Employees must be added via the registration form by an admin. Permissions can be viewed and changed by clicking view/edit. Only the permissions, name and contact details can be changed. Passwords should be changed by the users and their username is fixed as it is linked to products and logs.",
         rootAdmin: req.session.rootAdmin
     }
-    itemsRender(req, res, MODELNAME, args, formatData);
+    const fields = "name username permissions";
+    itemsRender(req, res, MODELNAME, args, formatData, fields);
 })
 
 router.get("/:id", check.login, check.admin, check.read, async (req, res) => {
@@ -63,7 +64,8 @@ router.get("/:id", check.login, check.admin, check.read, async (req, res) => {
         editPath: `${BASEPATH}/edit`,
         editInclude: "Employees"
     }
-    singleItemRender(req, res, MODELNAME, req.params.id, args, formatData);
+    const fields = "name username permissions";
+    singleItemRender(req, res, MODELNAME, req.params.id, args, formatData, fields);
 })
 
 router.post("/update/:id", check.login, check.admin, check.update, async (req, res) => {

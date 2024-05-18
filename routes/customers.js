@@ -43,6 +43,28 @@ function formatData(data) {
     return data;
 }
 
+async function productMapping(req, res, interestedIn) {
+    let interestedInProducts = [];
+    if (Array.isArray(interestedIn)) {
+        // Convert each product_id to an object containing product_id and product_name
+        for (const product of interestedIn) {
+            const productInfo = await crudController.getOneRaw(req, res, "product", product, "name");
+            interestedInProducts.push({
+                product_id: productInfo._id,
+                product_name: productInfo.name
+            });
+        }
+    } else {
+        // If only one product selected, convert it to an array of object containing product_id and product_name
+        const productInfo = await crudController.getOneRaw(req, res, "product", interestedIn, "name");
+        interestedInProducts = [{
+            product_id: productInfo._id,
+            product_name: productInfo.name
+        }];
+    }
+    return interestedInProducts;
+}
+
 router.get("/", check.login, check.read, async (req, res) => {
     const products = await crudController.getRaw(req, res, "product", "name")
     const employees = await crudController.getRaw(req, res, "employee", "username")
@@ -77,28 +99,6 @@ router.get("/delete/:id", check.login, check.del, async (req, res) => {
     crudController.del(req, res, MODELNAME);
     res.redirect(BASEPATH);
 })
-
-async function productMapping(req, res, interestedIn) {
-    let interestedInProducts = [];
-    if (Array.isArray(interestedIn)) {
-        // Convert each product_id to an object containing product_id and product_name
-        for (const product of interestedIn) {
-            const productInfo = await crudController.getOneRaw(req, res, "product", product, "name");
-            interestedInProducts.push({
-                product_id: productInfo._id,
-                product_name: productInfo.name
-            });
-        }
-    } else {
-        // If only one product selected, convert it to an array of object containing product_id and product_name
-        const productInfo = await crudController.getOneRaw(req, res, "product", interestedIn, "name");
-        interestedInProducts = [{
-            product_id: productInfo._id,
-            product_name: productInfo.name
-        }];
-    }
-    return interestedInProducts;
-}
 
 router.post('/create', check.login, check.create, async (req, res) => {
     req.body.interested_in = await productMapping(req, res, req.body.interested_in);
