@@ -37,7 +37,7 @@ unless firstUser
         }
 
 
-    button(id="toggleButton" onclick="toggleContent()") Show employee registration form
+    button(id="toggleButton" class="plain-back" onclick="toggleContent()") Show employee registration form
 
     form(id="userForm" style="display: none;" action="/employees/create" method="post")
         p Either have the employee type their desired password here or give and send them a secure password then instruct them to login and change their password ASAP.
@@ -47,29 +47,28 @@ unless firstUser
 
         p Permissions:
         input(type="hidden" name="permissions")
-        div
+        .labelInput
             label(for="create") Create:
             input(type="checkbox" name="create" id="create" aria-label="Checkbox for create permission")
-        div
+        .labelInput
             label(for="read") Read:
             input(type="checkbox" name="read" id="read" aria-label="Checkbox for read permission")
-        div
+        .labelInput
             label(for="update") Update:
             input(type="checkbox" name="update" id="update" aria-label="Checkbox for update permission")
-        div
+        .labelInput
             label(for="delete") Delete:
             input(type="checkbox" name="delete" id="delete" aria-label="Checkbox for delete permission")
-        div
+        .labelInput
             label(for="viewSensitive") View sensitive customer information (Email, Phone, Address):
             input(type="checkbox" name="viewSensitive" id="viewSensitive" aria-label="Checkbox for permission to view sensitive customer information")
         if rootAdmin
-            div
+            .labelInput
                 //- only the root account can add new admins, admins get all permissions
                 label(for="admin") Admin (Can only be given if you are the root admin, gives all other permissions):
                 input(type="checkbox" name="admin" id="admin" aria-label="Checkbox for assigning admin")
         else 
             p Only the rootAdmin can grant admin status
-        br
         button(type="button" onclick="submitForm()") Register
 
 

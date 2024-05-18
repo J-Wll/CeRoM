@@ -19,7 +19,7 @@ router.get('/', function (req, res, next) {
 
   const perms = permsArr(req);
 
-  res.render('dashboard', { username: req.session.username, admin: req.session.admin, perms });
+  res.render('dashboard', { username: req.session.username, admin: req.session.admin, rootAdmin: req.session.rootAdmin, perms });
 });
 
 router.get('/sign-out', function (req, res, next) {

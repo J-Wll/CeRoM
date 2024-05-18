@@ -1,170 +1,143 @@
-doctype html
-html
-  head
-    title Customer Logs
-    style.
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-      .form-control {
-        width: 100%;
-        padding: 8px;
-        box-sizing: border-box;
-      }
-      .btn {
-        padding: 8px 16px;
-        margin: 4px;
-        cursor: pointer;
-      }
-      .btn-danger {
-        background-color: #dc3545;
-        color: white;
-        border: none;
-      }
-      .btn-primary {
-        background-color: #007bff;
-        color: white;
-        border: none;
-      }
-  body
-    .container
-      h1 Customer Logs
-      table
-        thead
-          tr
-            th Contact Type
-            th Contact Date/Time
-            th Contact Medium
-            th Contact Description
-            th Actions
-        tbody
-          each log, index in data.customer_logs
-            tr
-              td
-                select.form-control(name=`customer_logs[${index}][contact_type]`)
-                  option(value="initial contact" selected=(log.contact_type === 'initial contact')) Initial Contact
-                  option(value="sales" selected=(log.contact_type === 'sales')) Sales
-                  option(value="support" selected=(log.contact_type === 'support')) Support
-                  option(value="referrals" selected=(log.contact_type === 'referrals')) Referrals
-              td
-                input.form-control(type="datetime-local", name=`data.customer_logs[${index}][contact_datetime]`, value=log.contact_datetime)
-              td
-                input.form-control(type="text", name=`data.customer_logs[${index}][contact_medium]`, value=log.contact_medium)
-              td
-                input.form-control(type="text", name=`data.customer_logs[${index}][contact_description]`, value=log.contact_description)
-              td
-                button.btn.btn-danger(type="button", onclick=`deleteLog(${index})`) Delete
+style.
+  .form-control {
+    min-width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  .btn-danger {
+    background-color: #dc3545;
+  }
 
-      h2 Add New Log Entry
-      form#add-log-form
-        .form-group
-          label(for="new_contact_type") Contact Type
-          select.form-control#new_contact_type
-            option(value="initial contact") Initial Contact
-            option(value="sales") Sales
-            option(value="support") Support
-            option(value="referrals") Referrals
-        .form-group
-          label(for="new_contact_datetime") Contact Date/Time
-          input.form-control#new_contact_datetime(type="datetime-local")
-        .form-group
-          label(for="new_contact_medium") Contact Medium
-          input.form-control#new_contact_medium(type="text")
-        .form-group
-          label(for="new_contact_description") Contact Description
-          input.form-control#new_contact_description(type="text")
-        button.btn.btn-primary(type="button", onclick="addLog()") Add Log
 
-    script.
-      let customerLogs = !{JSON.stringify(data.customer_logs)};
+.container
+  h1 Customer Logs
+  table(id="logs-table")
+    thead
+      tr
+        th Contact Type
+        th Contact Date/Time
+        th Contact Medium
+        th Contact Description
+        th Actions
+    tbody
+      each log, index in data.customer_logs
+        tr
+          td
+            select.form-control(name=`customer_logs[${index}][contact_type]`)
+              option(value="initial contact" selected=(log.contact_type === 'initial contact')) Initial Contact
+              option(value="sales" selected=(log.contact_type === 'sales')) Sales
+              option(value="support" selected=(log.contact_type === 'support')) Support
+              option(value="referrals" selected=(log.contact_type === 'referrals')) Referrals
+          td
+            input.form-control(type="datetime-local", name=`data.customer_logs[${index}][contact_datetime]`, value=log.contact_datetime)
+          td
+            input.form-control(type="text", name=`data.customer_logs[${index}][contact_medium]`, value=log.contact_medium)
+          td
+            input.form-control(type="text", name=`data.customer_logs[${index}][contact_description]`, value=log.contact_description)
+          td
+            button.btn.btn-danger(type="button", onclick=`deleteLog(${index})`) Delete
 
-      function deleteLog(index) {
-        customerLogs.splice(index, 1);
-        renderTable();
-      }
+  h2 Add New Log Entry
+  form#add-log-form
+    .form-group
+      label(for="new_contact_type") Contact Type
+      select.form-control#new_contact_type
+        option(value="initial contact") Initial Contact
+        option(value="sales") Sales
+        option(value="support") Support
+        option(value="referrals") Referrals
+    .form-group
+      label(for="new_contact_datetime") Contact Date/Time
+      input.form-control#new_contact_datetime(type="datetime-local")
+    .form-group
+      label(for="new_contact_medium") Contact Medium
+      input.form-control#new_contact_medium(type="text")
+    .form-group
+      label(for="new_contact_description") Contact Description
+      input.form-control#new_contact_description(type="text")
+    button.btn.btn-primary(type="button" onclick="addLog()") Add Log
 
-      function addLog() {
-        const newLog = {
-          contact_type: document.getElementById('new_contact_type').value,
-          contact_datetime: document.getElementById('new_contact_datetime').value,
-          contact_medium: document.getElementById('new_contact_medium').value,
-          contact_description: document.getElementById('new_contact_description').value
-        };
-        customerLogs.push(newLog);
-        renderTable();
-        document.getElementById('add-log-form').reset();
-      }
+  script.
+    let customerLogs = !{JSON.stringify(data.customer_logs)};
 
-      function renderTable() {
-        const tbody = document.querySelector('table tbody');
-        tbody.innerHTML = '';
-        customerLogs.forEach((log, index) => {
-          const row = document.createElement('tr');
-          
-          const contactTypeTd = document.createElement('td');
-          const contactTypeSelect = document.createElement('select');
-          contactTypeSelect.className = 'form-control';
-          contactTypeSelect.name = `data.customer_logs[${index}][contact_type]`;
-          ['initial contact', 'sales', 'support', 'referrals'].forEach(type => {
-            const option = document.createElement('option');
-            option.value = type;
-            option.selected = log.contact_type === type;
-            option.innerText = type.charAt(0).toUpperCase() + type.slice(1);
-            contactTypeSelect.appendChild(option);
-          });
-          contactTypeTd.appendChild(contactTypeSelect);
+    function deleteLog(index) {
+      customerLogs.splice(index, 1);
+      renderTable();
+    }
 
-          const contactDatetimeTd = document.createElement('td');
-          const contactDatetimeInput = document.createElement('input');
-          contactDatetimeInput.className = 'form-control';
-          contactDatetimeInput.type = 'datetime-local';
-          contactDatetimeInput.name = `data.customer_logs[${index}][contact_datetime]`;
-          contactDatetimeInput.value = log.contact_datetime;
-          contactDatetimeTd.appendChild(contactDatetimeInput);
+    function addLog() {
+      const newLog = {
+        contact_type: document.getElementById('new_contact_type').value,
+        contact_datetime: document.getElementById('new_contact_datetime').value,
+        contact_medium: document.getElementById('new_contact_medium').value,
+        contact_description: document.getElementById('new_contact_description').value
+      };
+      customerLogs.push(newLog);
+      renderTable();
+      document.getElementById('add-log-form').reset();
+    }
 
-          const contactMediumTd = document.createElement('td');
-          const contactMediumInput = document.createElement('input');
-          contactMediumInput.className = 'form-control';
-          contactMediumInput.type = 'text';
-          contactMediumInput.name = `data.customer_logs[${index}][contact_medium]`;
-          contactMediumInput.value = log.contact_medium;
-          contactMediumTd.appendChild(contactMediumInput);
+    function renderTable() {
+      const tbody = document.querySelector('#logs-table tbody');
+      tbody.innerHTML = '';
+      customerLogs.forEach((log, index) => {
+        const row = document.createElement('tr');
 
-          const contactDescriptionTd = document.createElement('td');
-          const contactDescriptionInput = document.createElement('input');
-          contactDescriptionInput.className = 'form-control';
-          contactDescriptionInput.type = 'text';
-          contactDescriptionInput.name = `data.customer_logs[${index}][contact_description]`;
-          contactDescriptionInput.value = log.contact_description;
-          contactDescriptionTd.appendChild(contactDescriptionInput);
-
-          const actionsTd = document.createElement('td');
-          const deleteButton = document.createElement('button');
-          deleteButton.className = 'btn btn-danger';
-          deleteButton.type = 'button';
-          deleteButton.innerText = 'Delete';
-          deleteButton.onclick = () => deleteLog(index);
-          actionsTd.appendChild(deleteButton);
-
-          row.appendChild(contactTypeTd);
-          row.appendChild(contactDatetimeTd);
-          row.appendChild(contactMediumTd);
-          row.appendChild(contactDescriptionTd);
-          row.appendChild(actionsTd);
-
-          tbody.appendChild(row);
+        const contactTypeTd = document.createElement('td');
+        const contactTypeSelect = document.createElement('select');
+        contactTypeSelect.className = 'form-control';
+        contactTypeSelect.name = `data.customer_logs[${index}][contact_type]`;
+        ['initial contact', 'sales', 'support', 'referrals'].forEach(type => {
+          const option = document.createElement('option');
+          option.value = type;
+          option.selected = log.contact_type === type;
+          option.innerText = type.charAt(0).toUpperCase() + type.slice(1);
+          contactTypeSelect.appendChild(option);
         });
-      }
+        contactTypeTd.appendChild(contactTypeSelect);
 
-      document.addEventListener('DOMContentLoaded', () => {
-        renderTable();
+        const contactDatetimeTd = document.createElement('td');
+        const contactDatetimeInput = document.createElement('input');
+        contactDatetimeInput.className = 'form-control';
+        contactDatetimeInput.type = 'datetime-local';
+        contactDatetimeInput.name = `data.customer_logs[${index}][contact_datetime]`;
+        contactDatetimeInput.value = log.contact_datetime;
+        contactDatetimeTd.appendChild(contactDatetimeInput);
+
+        const contactMediumTd = document.createElement('td');
+        const contactMediumInput = document.createElement('input');
+        contactMediumInput.className = 'form-control';
+        contactMediumInput.type = 'text';
+        contactMediumInput.name = `data.customer_logs[${index}][contact_medium]`;
+        contactMediumInput.value = log.contact_medium;
+        contactMediumTd.appendChild(contactMediumInput);
+
+        const contactDescriptionTd = document.createElement('td');
+        const contactDescriptionInput = document.createElement('input');
+        contactDescriptionInput.className = 'form-control';
+        contactDescriptionInput.type = 'text';
+        contactDescriptionInput.name = `data.customer_logs[${index}][contact_description]`;
+        contactDescriptionInput.value = log.contact_description;
+        contactDescriptionTd.appendChild(contactDescriptionInput);
+
+        const actionsTd = document.createElement('td');
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'btn btn-danger';
+        deleteButton.type = 'button';
+        deleteButton.innerText = 'Delete';
+        deleteButton.onclick = () => deleteLog(index);
+        actionsTd.appendChild(deleteButton);
+
+        row.appendChild(contactTypeTd);
+        row.appendChild(contactDatetimeTd);
+        row.appendChild(contactMediumTd);
+        row.appendChild(contactDescriptionTd);
+        row.appendChild(actionsTd);
+
+        tbody.appendChild(row);
       });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTable();
+    });

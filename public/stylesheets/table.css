@@ -1,14 +1,18 @@
 table {
     border-spacing: 0;
+    width: 100%;
 }
 
 th,
 td {
     border: solid 1px black;
+    border: 1px solid #adadad;
+
 }
 
 td {
     padding: 0.5em;
+    background-color: rgb(253, 253, 253);
 }
 
 td input {
@@ -30,6 +34,8 @@ th button {
     background-color: transparent;
     cursor: pointer;
     font-weight: 800;
+    color: black;
+    margin: 0px;
 }
 
 /* Corner rounding for the table, needs border-spacing 0 on the table instead of border-collapse. Extra prop for top of edit */

@@ -9,10 +9,9 @@ block content
     if message
         p= message.message
 
+    hr  
+
     if admin === true && title === "Employees"
-        br
-        hr  
-        br
         include includes/addEmployee.pug
 
     if create === true && title === "Customers"

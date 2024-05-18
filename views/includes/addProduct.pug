@@ -2,14 +2,16 @@
 h2 Create Product
 
 form(method="POST" action="/products/create" class="regular-form")
-    label(for="name" class="required") Name:
-    input(type="text" id="name" name="name", required)
-    label(for="stock" class="required") Stock:
-    input(type="number" id="stock" name="stock", required)
-    br
-    label(for="price" class="required") Price:
-    input(type="number" id="price" name="price", required)
-    label(for="sales" class="required") Sales:
-    input(type="number" id="sales" name="sales", required)
-    br
+    .labelInput
+        label(for="name" class="required") Name:
+        input(type="text" id="name" name="name", required)
+    .labelInput
+        label(for="stock" class="required") Stock:
+        input(type="number" id="stock" name="stock", required)
+    .labelInput
+        label(for="price" class="required") Price:
+        input(type="number" id="price" name="price", required)
+    .labelInput
+        label(for="sales" class="required") Sales:
+        input(type="number" id="sales" name="sales", required)
     button Create product
