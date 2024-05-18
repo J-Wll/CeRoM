@@ -21,7 +21,11 @@ table(id="logs-table")
           td
             input(class="form-control" type="datetime-local" name="contact_datetime", value=log.contact_datetime)
           td
-            input(class="form-control" type="text" name="contact_medium", value=log.contact_medium)
+            //- input(class="form-control" type="text" name="contact_medium", value=log.contact_medium)
+            select(class="form-control" id="contact_medium" name="contact_medium")
+              option(value="phone" selected=(log.contact_medium === 'phone')) Phone
+              option(value="email" selected=(log.contact_medium === 'email')) Email
+              option(value="face to face" selected=(log.contact_medium === 'face to face')) Face to face
           td
             input(class="form-control" type="text" name="contact_description", value=log.contact_description)
           td
