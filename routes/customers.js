@@ -8,7 +8,9 @@ const singleItemRender = require("../js/singleItemRender");
 const BASEPATH = "/customers";
 const MODELNAME = "customer";
 
-function formatData(data) {
+const customer = require(`../models/${MODELNAME}`);
+
+function formatData(data, doExtras = true) {
     function formatInner(item) {
         for (header in item) {
             if (header === "handled_by") {
@@ -19,9 +21,12 @@ function formatData(data) {
                     item[header][i] = item[header][i].product_name;
                 }
             }
-            if (header === "customer-logs") {
+            if (header === "customer_logs") {
                 // Keep the full ones for the other view
-                item["full-customer-logs"] = item[header];
+                // item["full-logs"] = item[header];
+                if (doExtras) {
+                    item.extras = { fullLogs: item[header] }
+                }
                 item[header] = `${item[header].length} entries`
             }
         }
@@ -113,5 +118,40 @@ router.post('/create', check.login, check.create, async (req, res) => {
 
     await crudController.create(req, res, this, MODELNAME, BASEPATH);
 });
+
+router.post("/create-log/:id", check.login, check.create, async (req, res) => {
+    console.log(req.body);
+    console.log(req.params);
+    const { contact_type, contact_datetime, contact_medium, contact_description } = req.body;
+
+    try {
+        await customer.findByIdAndUpdate(req.params.id, {
+            $push: {
+                customer_logs: {
+                    contact_type,
+                    contact_datetime,
+                    contact_medium,
+                    contact_description
+                }
+            }
+        });
+    } catch (err) {
+        console.error(err);
+    }
+
+    res.redirect(`${BASEPATH}/${req.params.id}`);
+})
+
+router.post("/edit-log/:id/:logID", check.login, check.update, async (req, res) => {
+    console.log(req.params);
+    console.log(req.body);
+    res.redirect(`/${req.params.id}`);
+})
+
+router.get("/delete-log/:id/:logID", check.login, check.del, async (req, res) => {
+    console.log(req.params);
+    console.log(req.body);
+    res.redirect(`/${req.params.id}`);
+})
 
 module.exports = router;

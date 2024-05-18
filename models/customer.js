@@ -22,7 +22,7 @@ const Customer = new mongoose.Schema({
         contact_datetime: String,
         contact_medium: String,
         contact_description: String
-    }]
+    }, { _id: true }]
 
 })
 
