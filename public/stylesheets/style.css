@@ -67,6 +67,15 @@ header {
   margin-right: 5px;
 }
 
+.a-button {
+  color: white;
+  border-radius: 5px;
+  padding: 10px 14px;
+  font-weight: bold;
+  text-decoration: none;
+  border: solid rgb(160, 160, 160) 1px;
+}
+
 .btn-danger {
   background-color: #dc3545;
 }

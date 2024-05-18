@@ -137,7 +137,7 @@ router.post('/create', check.login, check.create, async (req, res) => {
 
     await crudController.create(req, res, this, MODELNAME, BASEPATH);
 });
-
+// LOGS
 router.post("/create-log/:id", check.login, check.create, async (req, res) => {
     console.log(req.body);
     console.log(req.params);
@@ -164,13 +164,43 @@ router.post("/create-log/:id", check.login, check.create, async (req, res) => {
 router.post("/edit-log/:id/:logID", check.login, check.update, async (req, res) => {
     console.log(req.params);
     console.log(req.body);
-    res.redirect(`/${req.params.id}`);
+    const { contact_type, contact_datetime, contact_medium, contact_description } = req.body;
+
+    try {
+        await customer.updateOne(
+            { _id: req.params.id, "customer_logs._id": req.params.logID },
+            {
+                $set: {
+                    "customer_logs.$.contact_type": contact_type,
+                    "customer_logs.$.contact_datetime": contact_datetime,
+                    "customer_logs.$.contact_medium": contact_medium,
+                    "customer_logs.$.contact_description": contact_description
+                }
+            }
+        );
+    } catch (err) {
+        console.error(err);
+    }
+
+    res.redirect(`${BASEPATH}/${req.params.id}`);
 })
 
 router.get("/delete-log/:id/:logID", check.login, check.del, async (req, res) => {
     console.log(req.params);
     console.log(req.body);
-    res.redirect(`/${req.params.id}`);
+
+    try {
+        await customer.findByIdAndUpdate(req.params.id, {
+            $pull: {
+                customer_logs: { _id: req.params.logID }
+            }
+        });
+    } catch (err) {
+        console.error(err);
+    }
+
+    res.redirect(`${BASEPATH}/${req.params.id}`);
 })
+
 
 module.exports = router;

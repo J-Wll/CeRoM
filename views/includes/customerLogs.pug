@@ -30,7 +30,7 @@ table(id="logs-table")
             input(class="form-control" type="text" name="contact_description", value=log.contact_description)
           td
             button(class="log-button btn-primary" type="submit") Edit
-            button(class="log-button btn-danger" type="button", onclick=`deleteLog(${log._id})`) Delete
+            a(class="log-button btn-danger a-button" type="button" href=`/customers/delete-log/${data._id}/${log._id}`) Delete
 
 h3 Add New Log Entry
 form(id="add-log-form" method="POST" action=`/customers/create-log/${data._id}`)
