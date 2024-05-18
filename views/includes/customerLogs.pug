@@ -42,7 +42,10 @@ form(id="add-log-form" method="POST" action="/add-log")
     input(class="form-control" id="new_contact_datetime" type="datetime-local" name="contact_datetime")
   .form-group
     label(for="new_contact_medium") Contact Medium
-    input(class="form-control" id="new_contact_medium" type="text" name="contact_medium")
+    select(class="form-control" id="new_contact_mediume" name="contact_medium")
+      option(value="phone") Phone
+      option(value="email") Email
+      option(value="face to face") Face to face
   .form-group
     label(for="new_contact_description") Contact Description
     input(class="form-control" id="new_contact_description" type="text" name="contact_description")
