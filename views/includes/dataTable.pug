@@ -59,8 +59,9 @@ block content
                 tr
                     each column in row
                         td #{column}
-                    td 
-                        a(href=`${basePath}/${row._id}`) View/Edit 
+                    unless noItems
+                        td 
+                            a(href=`${basePath}/${row._id}`) View/Edit 
 
     if description 
         p=description

@@ -14,6 +14,10 @@ form(method="POST" action="/customers/create" class="regular-form")
         input(type="tel" id="phone" name="phone")
 
     .labelInput
+        label(for="phone") Address:
+        input(id="address" name="address")
+
+    .labelInput
         label(for="handled_by" class="required") Handled By:
         select(id="handled_by" name="handled_by", required)
             each employee in employees

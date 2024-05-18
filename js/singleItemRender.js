@@ -9,6 +9,10 @@ async function singleItemRender(req, res, model, id, args, formatData = undefine
     let item = await crudController.getOne(req, res, model, id);
     let extras = undefined;
 
+    if (!item) {
+        return res.json({ error: "Item does not exist" })
+    }
+
     if (formatData) {
         item = formatData(item);
         if (item.extras) {
