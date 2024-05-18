@@ -7,8 +7,6 @@ extends layouts/singleItemLayout
 block content
     include includes/header.pug
 
-    br
-
     h2 #{title} #{data[nameField]}
 
     table
@@ -23,6 +21,7 @@ block content
                     td #{item}
 
     br
+    hr
 
     //- This is ugly but dynamic includes (include #{includePath} do not seem to be supported)
     if editInclude == "Products"
