@@ -73,8 +73,15 @@ router.get("/:id", check.login, check.admin, check.read, async (req, res) => {
 })
 
 router.post("/update/:id", check.login, check.admin, check.update, async (req, res) => {
-    delete req.body.password;
-    delete req.body.username;
+    if (req.body.password || req.body.username) {
+        delete req.body.password;
+        delete req.body.username;
+        req.session.flash = {
+            type: "error",
+            message: "Can't change username or pass",
+        };
+        return res.redirect(req.get("referer"));
+    }
 
     req.body.permissions = JSON.parse(req.body.permissions);
     // admins implicitly get all permissions (other than root admin)
