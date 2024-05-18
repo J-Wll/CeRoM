@@ -12,12 +12,21 @@ const customer = require(`../models/${MODELNAME}`);
 
 function formatData(data, doExtras = true) {
     function formatInner(item) {
+        if (doExtras) {
+            item.extras = {};
+        }
         for (header in item) {
             if (header === "handled_by") {
                 item[header] = item[header].employee_username;
             }
             if (header === "interested_in") {
+                if (doExtras) {
+                    item.extras[header] = []
+                }
                 for (i in item[header]) {
+                    if (doExtras) {
+                        item.extras[header].push(item[header][i]);
+                    }
                     item[header][i] = item[header][i].product_name;
                 }
             }
@@ -25,7 +34,7 @@ function formatData(data, doExtras = true) {
                 // Keep the full ones for the other view
                 // item["full-logs"] = item[header];
                 if (doExtras) {
-                    item.extras = { fullLogs: item[header] }
+                    item.extras.fullLogs = item[header]
                 }
                 item[header] = `${item[header].length} entries`
             }
@@ -85,19 +94,31 @@ router.get("/", check.login, check.read, async (req, res) => {
 })
 
 router.get("/:id", check.login, check.read, async (req, res) => {
+    const products = await crudController.getRaw(req, res, "product", "name")
+    const employees = await crudController.getRaw(req, res, "employee", "username")
     const args = {
         title: "Customer:",
         nameField: "name",
         noEdit: ["_id", "__v"],
         editPath: `${BASEPATH}/edit`,
-        editInclude: "Customers"
+        editInclude: "Customers",
+        products: products,
+        employees: employees
     }
     singleItemRender(req, res, MODELNAME, req.params.id, args, formatData);
 })
 
 router.post("/update/:id", check.login, check.update, async (req, res) => {
+    req.body.interested_in = await productMapping(req, res, req.body.interested_in);
+
+    const handledByEmployee = await crudController.getOneRaw(req, res, "employee", req.body.handled_by, "username");
+    req.body.handled_by = {
+        employee_id: handledByEmployee._id,
+        employee_username: handledByEmployee.username
+    };
+
     crudController.update(req, res, MODELNAME, req.params.id);
-    res.redirect(`${BASEPATH}/:${req.params.id}`);
+    res.redirect(`${BASEPATH}/${req.params.id}`);
 })
 
 router.get("/delete/:id", check.login, check.del, async (req, res) => {
@@ -113,8 +134,6 @@ router.post('/create', check.login, check.create, async (req, res) => {
         employee_id: handledByEmployee._id,
         employee_username: handledByEmployee.username
     };
-
-    console.log(req.body)
 
     await crudController.create(req, res, this, MODELNAME, BASEPATH);
 });

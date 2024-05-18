@@ -1,1 +1,35 @@
+
+h2 Edit customer
+
+form(method="POST" action=`/customers/update/${data._id}` class="regular-form")
+    .labelInput
+        label(for="name" class="required") Name:
+        input(type="text" id="name" name="name" value=data.name, required)
+
+    .labelInput
+        label(for="email") Email:
+        input(type="email" id="email" name="email" value=data.email)
+
+    .labelInput
+        label(for="phone") Phone:
+        input(type="tel" id="phone" name="phone" value=data.phone)
+
+    .labelInput
+        label(for="phone") Address:
+        input(id="address" name="address" value=data.address)
+
+    .labelInput
+        label(for="handled_by" class="required") Handled By:
+        select(id="handled_by" name="handled_by", required)
+            each employee in employees
+                option(value=employee._id selected=(data.handled_by === employee.username))= employee.username
+
+    .labelInput
+        label(for="interestedIn" class="required") Interested In:
+        select(id="interestedIn" name="interested_in", multiple, required)
+            each product in products
+                option(value=product._id  selected=(data.interested_in.some(item => item === product.name)))= product.name
+
+    button Edit customer
+
 a(href=`/customers/delete/${data._id}` id="delete") Delete customer, this cannot be undone
