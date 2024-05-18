@@ -1,5 +1,5 @@
 
-h2 Edit customer
+h2 Edit #{data[nameField]}
 
 form(method="POST" action=`/customers/update/${data._id}` class="regular-form")
     .labelInput
@@ -31,5 +31,5 @@ form(method="POST" action=`/customers/update/${data._id}` class="regular-form")
                 option(value=product._id  selected=(data.interested_in.some(item => item === product.name)))= product.name
 
     button Edit customer
-
+br
 a(href=`/customers/delete/${data._id}` id="delete") Delete customer, this cannot be undone

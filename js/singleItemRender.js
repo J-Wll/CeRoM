@@ -27,7 +27,8 @@ async function singleItemRender(req, res, model, id, args, formatData = undefine
         ...args,
         data: item,
         extras: extras,
-        admin: req.session.admin
+        admin: req.session.admin,
+        rootAdmin: req.session.rootAdmin
     })
 
 }

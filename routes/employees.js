@@ -10,16 +10,20 @@ const bodyParser = require('body-parser');
 const BASEPATH = "/employees";
 const MODELNAME = "employee";
 
-function formatData(data) {
+function formatData(data, doExtras = true) {
     function formatInner(item) {
         for (header in item) {
             if (header === "permissions") {
+                if (doExtras) {
+                    item.extras = { permissions: item[header] };
+                }
                 let perms = []
                 if (item[header].rootAdmin) { perms.push(" Root Admin") };
                 if (item[header].admin) { perms.push(" Admin") };
                 if (item[header].create) { perms.push(" Create") };
                 if (item[header].read) { perms.push(" Read") };
                 if (item[header].update) { perms.push(" Update") };
+                if (item[header].viewSensitive) { perms.push(" View Sensitive") };
                 if (item[header].delete) { perms.push(" Delete") };
                 item[header] = perms;
             }
@@ -69,8 +73,28 @@ router.get("/:id", check.login, check.admin, check.read, async (req, res) => {
 })
 
 router.post("/update/:id", check.login, check.admin, check.update, async (req, res) => {
+    delete req.body.password;
+    delete req.body.username;
+
+    req.body.permissions = JSON.parse(req.body.permissions);
+    // admins implicitly get all permissions (other than root admin)
+    if (req.body.permissions.admin || req.body.permissions.rootAdmin) {
+        if (!req.session.rootAdmin) {
+            req.session.flash = {
+                type: "error",
+                message: "Root admin needed for adding an admin",
+            };
+            return res.redirect(req.get("referer"));
+        }
+        req.body.permissions.read = true;
+        req.body.permissions.create = true;
+        req.body.permissions.update = true;
+        req.body.permissions.delete = true;
+        req.body.permissions.viewSensitive = true;
+    }
+
     crudController.update(req, res, MODELNAME, req.params.id);
-    res.redirect(`${BASEPATH}/:${req.params.id}`);
+    res.redirect(`${BASEPATH}/${req.params.id}`);
 })
 
 router.get("/delete/:id", check.login, check.admin, check.del, async (req, res) => {
@@ -80,6 +104,13 @@ router.get("/delete/:id", check.login, check.admin, check.del, async (req, res) 
 
 router.post("/firstCreate", async (req, res) => {
     // This only works if employees.length is 0, that's how it is protected
+    if (req.body.password.length < 8) {
+        req.session.flash = {
+            type: "error",
+            message: "Password not long enough (needs to be >= 8)",
+        };
+        return res.redirect(req.get("referer"));
+    }
     const employees = await crudController.getRaw(req, res, "employee", "username");
     console.log(employees.length)
     if (employees.length === 0) {
