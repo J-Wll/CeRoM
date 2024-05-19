@@ -84,7 +84,7 @@ const validateInput = [
   }
 ];
 
-https://www.npmjs.com/package/xss
+// https://www.npmjs.com/package/xss
 "Sanitize untrusted HTML (to prevent XSS) with a configuration specified by a Whitelist."
 const sanitizeInput = [
   validator.body('*').customSanitizer((value, { req }) => {
