@@ -74,7 +74,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 const validateInput = [
-  validator.body('*').trim().notEmpty(),
+  validator.body('*').trim(),
   (req, res, next) => {
     const errors = validator.validationResult(req);
     if (!errors.isEmpty()) {
