@@ -13,8 +13,8 @@ const xss = require('xss');
 const app = express();
 
 const limiter = rateLimit({
-  windowMs: 10 * 60 * 1000, // 10 minutes
-  max: 1000
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 100
 });
 
 app.use(limiter);
