@@ -69,7 +69,7 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -88,8 +88,9 @@ const validateInput = [
 // "Sanitize untrusted HTML (to prevent XSS) with a configuration specified by a Whitelist."
 const sanitizeInput = [
   validator.body('*').customSanitizer((value, { req }) => {
-    console.log(xss(value));
-    return xss(value);
+    // Replace $ with _ in each field value
+    const sanitizedValue = value.replace(/\$/g, '_');
+    return xss(sanitizedValue);
   })
 ];
 
