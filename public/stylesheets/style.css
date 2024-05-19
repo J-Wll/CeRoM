@@ -7,8 +7,13 @@ body {
 
 button,
 select,
-input {
+input,
+textarea {
   font: 1.05rem "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+textarea {
+  width: 100%;
 }
 
 button {

@@ -1,3 +1,14 @@
+script. 
+  //- https://stackoverflow.com/questions/24468518/html5-input-datetime-local-default-value-of-today-and-current-time
+  function toLocalISOString(date) {
+    const localDate = new Date(date - date.getTimezoneOffset() * 60000);
+    localDate.setSeconds(null);
+    localDate.setMilliseconds(null);
+    return localDate.toISOString().slice(0, -1);
+  }
+  window.onload = function() {
+    document.getElementById('new_contact_datetime').value = toLocalISOString(new Date());
+  }
 
 hr
 h2 #{data[nameField]}s' Customer Logs
@@ -27,7 +38,7 @@ table(id="logs-table")
               option(value="email" selected=(log.contact_medium === 'email')) Email
               option(value="face to face" selected=(log.contact_medium === 'face to face')) Face to face
           td
-            input(class="form-control" type="text" name="contact_description", value=log.contact_description)
+            textarea(class="form-control" name="contact_description")=log.contact_description
           td
             button(class="log-button btn-primary" type="submit") Edit
             a(class="log-button btn-danger a-button" type="button" href=`/customers/delete-log/${data._id}/${log._id}`) Delete
@@ -52,6 +63,6 @@ form(id="add-log-form" method="POST" action=`/customers/create-log/${data._id}`)
       option(value="face to face") Face to face
   .form-group
     label(for="new_contact_description") Contact Description
-    input(class="form-control" id="new_contact_description" type="text" name="contact_description")
+    textarea(class="form-control" id="new_contact_description" name="contact_description")
   button(class="log-button btn-primary" type="submit") Add Log
 
