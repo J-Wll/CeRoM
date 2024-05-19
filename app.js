@@ -21,7 +21,7 @@ app.use(limiter);
 
 // limits use of inline scripts and styles for protection
 app.use((req, res, next) => {
-  const nonce = crypto.randomBytes(16).toString('base64');
+  const nonce = crypto.randomBytes(96).toString('base64');
   res.locals.nonce = nonce;
   res.setHeader("Content-Security-Policy", `default-src 'self'; script-src 'self' 'nonce-${nonce}'; style-src 'self' 'nonce-${nonce}';`);
   next();
