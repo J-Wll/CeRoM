@@ -56,8 +56,6 @@ function formatData(data, doExtras = true) {
 }
 
 async function productMapping(req, res, interestedIn) {
-    console.log(interestedIn);
-    console.log(typeof interestedIn);
     let interestedInProducts = [];
     if (Array.isArray(interestedIn)) {
         // Convert each product_id to an object containing product_id and product_name
