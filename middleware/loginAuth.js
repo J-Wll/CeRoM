@@ -41,7 +41,6 @@ async function loginAuth(req, res, next) {
     req.session.read = user.permissions.read || false;
     req.session.update = user.permissions.update || false;
     req.session.delete = user.permissions.delete || false;
-    req.session.viewSensitive = user.permissions.viewSensitive || false;
     req.session.admin = user.permissions.admin || false;
     req.session.rootAdmin = user.permissions.rootAdmin || false;
 

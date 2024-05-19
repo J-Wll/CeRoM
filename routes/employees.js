@@ -23,7 +23,6 @@ function formatData(data, doExtras = true) {
                 if (item[header].create) { perms.push(" Create") };
                 if (item[header].read) { perms.push(" Read") };
                 if (item[header].update) { perms.push(" Update") };
-                if (item[header].viewSensitive) { perms.push(" View Sensitive") };
                 if (item[header].delete) { perms.push(" Delete") };
                 item[header] = perms;
             }
@@ -95,7 +94,6 @@ router.post("/update/:id", check.login, check.admin, check.update, async (req, r
         req.body.permissions.create = true;
         req.body.permissions.update = true;
         req.body.permissions.delete = true;
-        req.body.permissions.viewSensitive = true;
     }
 
     crudController.update(req, res, MODELNAME, req.params.id);
@@ -169,7 +167,6 @@ router.post('/create', check.login, check.admin, check.create, bodyParser.json()
         req.body.permissions.create = true;
         req.body.permissions.update = true;
         req.body.permissions.delete = true;
-        req.body.permissions.viewSensitive = true;
     }
 
     const hashedPassword = await hashPassword(req.body.password);

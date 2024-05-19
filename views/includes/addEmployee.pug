@@ -27,7 +27,6 @@ unless firstUser
                 read: document.getElementById("read").checked,
                 update: document.getElementById("update").checked,
                 delete: document.getElementById("delete").checked,
-                viewSensitive: document.getElementById("viewSensitive").checked,
             };
             if ("#{rootAdmin}"){
                 permissions.admin = document.getElementById("admin").checked
@@ -62,9 +61,6 @@ unless firstUser
         .labelInput
             label(for="delete") Delete:
             input(type="checkbox" name="delete" id="delete" aria-label="Checkbox for delete permission")
-        .labelInput
-            label(for="viewSensitive") View sensitive customer information (Email, Phone, Address):
-            input(type="checkbox" name="viewSensitive" id="viewSensitive" aria-label="Checkbox for permission to view sensitive customer information")
         if rootAdmin
             .labelInput
                 //- only the root account can add new admins, admins get all permissions

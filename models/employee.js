@@ -9,7 +9,6 @@ const Employee = new mongoose.Schema({
         delete: { type: Boolean, default: false },
         create: { type: Boolean, default: false },
         update: { type: Boolean, default: false },
-        viewSensitive: { type: Boolean, default: false },
         rootAdmin: { type: Boolean, default: false },
         admin: { type: Boolean, default: false }
     }

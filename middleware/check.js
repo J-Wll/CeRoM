@@ -64,17 +64,6 @@ function update(req, res, next) {
     next();
 }
 
-function viewSensitive(req, res, next) {
-    if (!req.session.viewSensitive) {
-        req.session.flash = ({
-            type: "error",
-            message: "Sensitive view permission required"
-        })
-        return res.redirect("/");
-    }
-    next();
-}
-
 function rootAdmin(req, res, next) {
     if (!req.session.rootAdmin) {
         req.session.flash = ({
@@ -92,7 +81,6 @@ const check = {
     del,
     create,
     update,
-    viewSensitive,
     rootAdmin,
     admin
 };
