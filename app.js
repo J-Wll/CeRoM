@@ -6,8 +6,17 @@ const logger = require('morgan');
 const session = require("express-session");
 const mongoose = require("mongoose");
 const crypto = require("node:crypto")
+const rateLimit = require('express-rate-limit');
 
 const app = express();
+
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  max: 1000 // 100 requests
+});
+
+app.use(limiter);
+
 
 app.use((req, res, next) => {
   const nonce = crypto.randomBytes(16).toString('base64');
