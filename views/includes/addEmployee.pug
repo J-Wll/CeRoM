@@ -7,20 +7,21 @@ if firstUser
         button Register
 
 unless firstUser 
-    script.
-        function toggleContent() {
+    script(nonce=`${nonce}`).
+        window.addEventListener('load', function() {
+            document.getElementById("toggleButton").addEventListener("click", function() {
             const content = document.getElementById("userForm");
             const toggleButton = document.getElementById("toggleButton");
-            if (content.style.display === "none") {
-                content.style.display = "block";
-                toggleButton.innerText = "Hide employee registration form"
-            } else {
-                content.style.display = "none";
-                toggleButton.innerText = "Show employee registration form"
-            }
-        }
+                if (content.classList.contains("hidden")) {
+                    content.classList.remove("hidden");
+                    toggleButton.innerText = "Hide employee registration form"
+                } else {
+                    content.classList.add("hidden");
+                    toggleButton.innerText = "Show employee registration form"
+                }
+        })
 
-        function submitForm() {
+        document.getElementById("submitButton").addEventListener("click", function() {
             const permissions = {
                 create: document.getElementById("create").checked,
                 read: document.getElementById("read").checked,
@@ -34,12 +35,14 @@ unless firstUser
             const form = document.getElementById("userForm");
             form.elements['permissions'].value = JSON.stringify(permissions);
             form.submit();
-        }
+        })
+        })
 
 
-    button(id="toggleButton" class="plain-back" onclick="toggleContent()") Show employee registration form
 
-    form(id="userForm" style="display: none;" action="/employees/create" method="post")
+    button(id="toggleButton" class="plain-back") Show employee registration form
+
+    form(id="userForm" action="/employees/create" class="hidden" method="post")
         p Either have the employee type their desired password here or give and send them a secure password then instruct them to login and change their password ASAP.
         input(placeholder="Full name" id="name" name="name" aria-label="Input for employee's full name")
         input(placeholder="Unique username" id="username" name="username" aria-label="Input for employee's unique username" autocomplete="off")
@@ -69,6 +72,6 @@ unless firstUser
                 input(type="checkbox" name="admin" id="admin" aria-label="Checkbox for assigning admin")
         else 
             p Only the rootAdmin can grant admin status
-        button(type="button" onclick="submitForm()") Register
+        button(type="button" id="submitButton") Register
 
 

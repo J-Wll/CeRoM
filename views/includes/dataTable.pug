@@ -1,8 +1,21 @@
 extends ../layouts/tableLayout
 
 block content
-    script.
-        window.onload = () => document.getElementById("limitSelect").value = #{limited};
+    script(nonce=`${nonce}`).
+        window.onload = function () {
+            document.getElementById("limitSelect").value = #{limited};
+            document.getElementById("limitSelect").addEventListener("change", function() {
+                addLimit(this.value);
+            });
+
+            const thButtons = document.getElementsByClassName("thSort");
+            Array.from(thButtons).forEach(button => {
+                button.addEventListener("click", function() {
+                    const columnName = this.innerText.trim().replace(/ ▲| ▼/, ''); // Remove arrow symbols that denote the sort
+                    addSort(columnName);
+                });
+            });
+            }
 
         function addSort(headerName){
             const searchParams = new URLSearchParams(window.location.search);
@@ -33,7 +46,7 @@ block content
 
 
     label Limit results to:     
-    select(id="limitSelect" onchange="addLimit(this.value)")
+    select(id="limitSelect")
         option(value="10") 10
         option(value="25") 25
         option(value="50") 50
@@ -48,7 +61,7 @@ block content
             tr 
                 each column in Object.keys(data[0])
                     th 
-                        button(onclick=`addSort('${column}')` aria-label=`Sort ${column}`) #{column} 
+                        button(aria-label=`Sort ${column}` class="thSort") #{column} 
                             if sortedBy === column 
                                 if sortedDir === 1
                                     span ▲

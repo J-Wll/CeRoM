@@ -1,4 +1,4 @@
-script.
+script(nonce=`${nonce}`).
     function submitForm() {
         const rootAdmin = #{rootAdmin};
         const permissions = {
@@ -15,6 +15,9 @@ script.
         form.elements['permissions'].value = JSON.stringify(permissions);
         form.submit();
     }
+    window.addEventListener("load", function(){
+        document.getElementById("editEmp").addEventListener("click", submitForm);
+    })
 
 h2 Edit #{data[nameField]}
 form(id="userForm" action=`/employees/update/${data._id}` method="post")
@@ -46,7 +49,7 @@ form(id="userForm" action=`/employees/update/${data._id}` method="post")
             input(type="checkbox" name="admin" id="admin" aria-label="Checkbox for assigning admin" checked=extras.permissions.admin)
     else 
         p Only the rootAdmin can grant admin status
-    button(type="button" onclick="submitForm()") Edit employee
+    button(type="button" id="editEmp") Edit employee
 
 
 br

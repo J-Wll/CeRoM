@@ -5,8 +5,16 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require("express-session");
 const mongoose = require("mongoose");
+const crypto = require("node:crypto")
 
 const app = express();
+
+app.use((req, res, next) => {
+  const nonce = crypto.randomBytes(16).toString('base64');
+  res.locals.nonce = nonce;
+  res.setHeader("Content-Security-Policy", `default-src 'self'; script-src 'self' 'nonce-${nonce}'; style-src 'self' 'nonce-${nonce}';`);
+  next();
+});
 
 // cookie setup
 // secure is false because it requires https
