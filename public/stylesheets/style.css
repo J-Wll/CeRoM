@@ -138,6 +138,14 @@ header a {
   width: 350px
 }
 
+#first-form * {
+  margin: 2px;
+}
+
+#first-form input {
+  padding: 9px 0px;
+}
+
 .regular-form * {
   margin: 5px;
   margin-left: 0px;

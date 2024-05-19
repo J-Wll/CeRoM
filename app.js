@@ -84,13 +84,17 @@ const validateInput = [
   }
 ];
 
-// https://www.npmjs.com/package/xss
-// "Sanitize untrusted HTML (to prevent XSS) with a configuration specified by a Whitelist."
+https://www.npmjs.com/package/xss
+"Sanitize untrusted HTML (to prevent XSS) with a configuration specified by a Whitelist."
 const sanitizeInput = [
   validator.body('*').customSanitizer((value, { req }) => {
     // Replace $ with _ in each field value
-    const sanitizedValue = value.replace(/\$/g, '_');
-    return xss(sanitizedValue);
+    let sanitizedValue = value;
+    if (typeof value === 'string') {
+      sanitizedValue = value.replace(/\$/g, '_');
+      sanitizedValue = xss(sanitizedValue);
+    }
+    return sanitizedValue;
   })
 ];
 

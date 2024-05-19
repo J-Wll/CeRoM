@@ -7,6 +7,11 @@ const itemsRender = require("../js/itemsRender");
 router.get("/", async function (req, res) {
     const employees = await crudController.getRaw(req, res, "employee", "username");
 
+    if (req.session.flash) {
+        res.locals.message = req.session.flash;
+        delete req.session.flash;
+    }
+
     if (employees.length === 0) {
         return res.render("rootAdmin", { firstUser: true })
     }
@@ -19,10 +24,6 @@ router.get("/", async function (req, res) {
         return res.redirect("/");
     }
 
-    if (req.session.flash) {
-        res.locals.message = req.session.flash;
-        delete req.session.flash;
-    }
     res.render("login");
 });
 

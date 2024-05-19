@@ -56,6 +56,8 @@ function formatData(data, doExtras = true) {
 }
 
 async function productMapping(req, res, interestedIn) {
+    console.log(interestedIn);
+    console.log(typeof interestedIn);
     let interestedInProducts = [];
     if (Array.isArray(interestedIn)) {
         // Convert each product_id to an object containing product_id and product_name
@@ -83,7 +85,7 @@ router.get("/", check.login, check.read, async (req, res) => {
     const args = {
         title: "Customers",
         basePath: BASEPATH,
-        description: "To view and edit customer logs, click view/edit on the customer",
+        description: "To view and edit customer logs, click view/edit on the customer. At least one product is required before creating a customer.",
         products: products,
         employees: employees
     }

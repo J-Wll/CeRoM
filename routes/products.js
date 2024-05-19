@@ -37,7 +37,6 @@ router.get("/", check.login, check.read, async (req, res) => {
     const args = {
         title: "Products",
         basePath: BASEPATH,
-        description: "Products"
     }
     itemsRender(req, res, MODELNAME, args, formatData);
 })

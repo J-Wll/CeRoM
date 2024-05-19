@@ -3,5 +3,9 @@ extends layouts/layout
 block content
     h1 Create the root admin
     p This account will have full control including the ability to create and manage regular admins
+    p This is appearing because no users were detected in the database, please establish the first one.
+
+    if message
+        p= message.message
 
     include includes/addEmployee.pug
