@@ -1,11 +1,3 @@
-// Plaintext passwords
-// [
-//   {"username": "joe", "password": "p97"},
-//   {"username": "bob", "password": "p28"},
-//   {"username": "jane", "password": "p74"},
-//   {"username": "jill", "password": "p17"}
-// ]
-
 const crudController = require("../controllers/crudController");
 const flashError = require("../js/flashError");
 const bcrypt = require("bcrypt");
