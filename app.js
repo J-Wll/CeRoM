@@ -7,6 +7,8 @@ const session = require("express-session");
 const mongoose = require("mongoose");
 const crypto = require("node:crypto")
 const rateLimit = require('express-rate-limit');
+const validator = require('express-validator');
+const xss = require('xss');
 
 const app = express();
 
@@ -17,7 +19,7 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-
+// limits use of inline scripts and styles for protection
 app.use((req, res, next) => {
   const nonce = crypto.randomBytes(16).toString('base64');
   res.locals.nonce = nonce;
@@ -27,12 +29,18 @@ app.use((req, res, next) => {
 
 // cookie setup
 // secure is false because it requires https
+// http only limits it to http/s
+// same site protects against css 
 app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false },
+  cookie: {
+    httpOnly: true,
+    secure: false,
+    sameSite: "strict"
+  },
   isAuthenticated: false,
   username: "NOT LOGGED IN",
   admin: false,
@@ -64,6 +72,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+const validateInput = [
+  validator.body('*').trim().notEmpty(),
+  (req, res, next) => {
+    const errors = validator.validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  }
+];
+
+const sanitizeInput = [
+  validator.body('*').customSanitizer((value, { req }) => {
+    console.log(xss(value));
+    return xss(value);
+  })
+];
+
+app.use(sanitizeInput);
+app.use(validateInput);
 
 const indexRouter = require('./routes/index');
 const productRouter = require('./routes/products');

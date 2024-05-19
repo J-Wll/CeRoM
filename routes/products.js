@@ -21,7 +21,6 @@ function formatData(data, doExtras = true) {
         return item;
     }
 
-    console.log("start: ", data);
 
     if (Array.isArray(data)) {
         for (item of data) {
@@ -31,7 +30,6 @@ function formatData(data, doExtras = true) {
         data = formatInner(data);
     }
 
-    console.log("end: ", data);
     return data;
 }
 

@@ -24,7 +24,6 @@ async function getOneRaw(req, res, model, id, fields = null) {
 
 async function updateRaw(req, res, model, id) {
     try {
-        console.log(req.body);
         const Model = require("../models/" + model);
         await Model.findByIdAndUpdate(id, req.body);
     } catch (error) {
@@ -78,7 +77,6 @@ async function update(req, res, model, id) {
     }
 
     try {
-        console.log(req.body);
         const Model = require("../models/" + model);
         await Model.findByIdAndUpdate(id, req.body);
     } catch (error) {

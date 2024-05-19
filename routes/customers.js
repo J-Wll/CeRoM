@@ -42,7 +42,6 @@ function formatData(data, doExtras = true) {
         return item;
     }
 
-    console.log("start: ", data);
 
     if (Array.isArray(data)) {
         for (item of data) {
@@ -52,7 +51,6 @@ function formatData(data, doExtras = true) {
         data = formatInner(data);
     }
 
-    console.log("end: ", data);
 
     return data;
 }
@@ -82,7 +80,6 @@ async function productMapping(req, res, interestedIn) {
 router.get("/", check.login, check.read, async (req, res) => {
     const products = await crudController.getRaw(req, res, "product", "name")
     const employees = await crudController.getRaw(req, res, "employee", "username")
-    console.log(products, employees)
     const args = {
         title: "Customers",
         basePath: BASEPATH,
@@ -139,8 +136,6 @@ router.post('/create', check.login, check.create, async (req, res) => {
 });
 // LOGS
 router.post("/create-log/:id", check.login, check.create, async (req, res) => {
-    console.log(req.body);
-    console.log(req.params);
     const { contact_type, contact_datetime, contact_medium, contact_description } = req.body;
 
     try {
@@ -162,8 +157,6 @@ router.post("/create-log/:id", check.login, check.create, async (req, res) => {
 })
 
 router.post("/edit-log/:id/:logID", check.login, check.update, async (req, res) => {
-    console.log(req.params);
-    console.log(req.body);
     const { contact_type, contact_datetime, contact_medium, contact_description } = req.body;
 
     try {
@@ -186,8 +179,6 @@ router.post("/edit-log/:id/:logID", check.login, check.update, async (req, res) 
 })
 
 router.get("/delete-log/:id/:logID", check.login, check.del, async (req, res) => {
-    console.log(req.params);
-    console.log(req.body);
 
     try {
         await customer.findByIdAndUpdate(req.params.id, {

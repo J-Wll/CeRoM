@@ -30,7 +30,6 @@ block content
                 //- if it is currently ascending and it is the same header, then set to des
                 if(searchParams.get("sortDir") === "1" & searchParams.get("sortBy") === headerName){
                     sortDir = -1;
-                    console.log(sortDir);
                 }
             }
             searchParams.set("sortBy", headerName);

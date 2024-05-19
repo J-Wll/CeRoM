@@ -16,19 +16,16 @@ async function loginAuth(req, res, next) {
   const inpUsername = req.body.username;
   const inpPassword = req.body.password;
 
-  console.log("request", inpUsername, inpPassword);
 
   let userPassMatch = false;
   const user = userData.find((user) => user.username === inpUsername);
 
   // guard clause if user not found
   if (!user) {
-    console.log("test1")
     return flashError(req, res, "Invalid username or password", "/login");
   }
 
   bcrypt.compare(inpPassword, user.password, function (err, result) {
-    console.log(err, result);
     userPassMatch = result === true;
 
     // If it doesn't match, redirect and send msg
@@ -38,8 +35,6 @@ async function loginAuth(req, res, next) {
 
     req.session.isAuthenticated = true;
     req.session.username = inpUsername;
-
-    console.log(user);
 
     req.session.userID = user._id.valueOf();
     req.session.create = user.permissions.create || false;

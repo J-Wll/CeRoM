@@ -31,7 +31,6 @@ function formatData(data, doExtras = true) {
         return item;
     }
 
-    console.log("start: ", data);
 
     if (Array.isArray(data)) {
         for (item of data) {
@@ -41,7 +40,6 @@ function formatData(data, doExtras = true) {
         data = formatInner(data);
     }
 
-    console.log("end: ", data);
 
     return data;
 }
@@ -119,7 +117,6 @@ router.post("/firstCreate", async (req, res) => {
         return res.redirect(req.get("referer"));
     }
     const employees = await crudController.getRaw(req, res, "employee", "username");
-    console.log(employees.length)
     if (employees.length === 0) {
         req.body.permissions = {
             rootAdmin: true,
@@ -131,7 +128,6 @@ router.post("/firstCreate", async (req, res) => {
         }
 
         req.body.password = await hashPassword(req.body.password);
-        console.log(req.body);
         crudController.createRaw(req, res, "employee")
         return res.redirect("/");
     }
@@ -178,7 +174,6 @@ router.post('/create', check.login, check.admin, check.create, bodyParser.json()
 
     const hashedPassword = await hashPassword(req.body.password);
     req.body.password = hashedPassword;
-    console.log(req.body);
     await crudController.create(req, res, this, MODELNAME, BASEPATH);
 });
 

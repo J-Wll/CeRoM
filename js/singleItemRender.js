@@ -21,7 +21,6 @@ async function singleItemRender(req, res, model, id, args, formatData = undefine
         }
     }
 
-    console.log(item);
 
     res.render("singleItem", {
         ...args,
