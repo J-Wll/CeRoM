@@ -27,15 +27,25 @@ async function loginAuth(req, res, next) {
 
     req.session.isAuthenticated = true;
     req.session.username = inpUsername;
-
     req.session.userID = user._id.valueOf();
-    req.session.create = user.permissions.create || false;
-    req.session.read = user.permissions.read || false;
-    req.session.update = user.permissions.update || false;
-    req.session.delete = user.permissions.delete || false;
-    req.session.admin = user.permissions.admin || false;
-    req.session.rootAdmin = user.permissions.rootAdmin || false;
 
+    // safeguard against admins having their permissions removed. An admin always has these
+    if (user.permissions.admin || user.permissions.rootAdmin) {
+      req.session.create = true;
+      req.session.read = true;
+      req.session.update = true;
+      req.session.delete = true;
+      req.session.admin = true;
+      req.session.rootAdmin = user.permissions.rootAdmin || false;
+    } else {
+      req.session.create = user.permissions.create || false;
+      req.session.read = user.permissions.read || false;
+      req.session.update = user.permissions.update || false;
+      req.session.delete = user.permissions.delete || false;
+      req.session.admin = false;
+      req.session.rootAdmin = false;
+    }
+    
     next();
   });
 }

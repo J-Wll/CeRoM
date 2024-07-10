@@ -96,6 +96,12 @@ router.post("/update/:id", check.login, check.admin, check.update, async (req, r
         req.body.permissions.delete = true;
     }
 
+    // Stop the already existing root admin permission being removed when editing permissions
+    if (!req.body.permissions.rootAdmin) {
+        emp = await crudController.getOne(req, res, MODELNAME, req.params.id);
+        req.body.permissions.rootAdmin = emp.permissions.rootAdmin || false;
+    }
+
     crudController.update(req, res, MODELNAME, req.params.id);
     res.redirect(`${BASEPATH}/${req.params.id}`);
 })
