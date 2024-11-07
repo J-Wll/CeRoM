@@ -12,8 +12,14 @@ router.get("/", async function (req, res) {
         delete req.session.flash;
     }
 
-    if (employees.length === 0) {
-        return res.render("rootAdmin", { firstUser: true })
+
+    try {
+        if (employees.length === 0) {
+            return res.render("rootAdmin", { firstUser: true })
+        }
+    }
+    catch (error) {
+        return res.json({ "error": "not connected to MongoDB. Read the README and make sure your .env is configured correctly. Then restart the server and refresh." })
     }
 
     if (req.session.isAuthenticated) {
